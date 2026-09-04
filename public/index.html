@@ -2,517 +2,416 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WatchRoom</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0d0d0f">
+<title>JIN — curated China</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root{
-  --bg:#09090b;--panel:#121217;--panel2:#18181f;--panel3:#202028;--line:#2c2c36;
-  --text:#f8f8fa;--muted:#9b9ba8;--accent:#7357ff;--accent2:#9c88ff;--danger:#ff536b;--ok:#42d38d;
+  --bg:#0c0c0e;--panel:#141416;--panel2:#1a1a1d;--line:#29292d;
+  --text:#f5f2e9;--muted:#929196;--gold:#d7b36a;--gold2:#f2d397;
+  --danger:#e86b73;--green:#69c796;--safeBottom:max(14px,env(safe-area-inset-bottom));
 }
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
-button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-button{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:800}
-button:hover{filter:brightness(1.08)}button.primary{background:var(--accent);border-color:transparent}button.danger{background:var(--danger);border-color:transparent}
-input{width:100%;background:#0d0d11;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--text);outline:none}
-input:focus{border-color:#6250c9}.muted{color:var(--muted)}.small{font-size:12px}.row{display:flex;gap:8px;flex-wrap:wrap}
-.logo{font-weight:950;font-size:22px;display:flex;align-items:center;gap:10px}.logo-mark{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,var(--accent),#be5fff)}
-.auth-page{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr}
-.auth-art{padding:42px;background:radial-gradient(circle at 70% 25%,rgba(115,87,255,.3),transparent 35%),linear-gradient(145deg,#15151d,#09090b);display:flex;flex-direction:column;justify-content:space-between}
-.auth-art h1{font-size:54px;line-height:.98;max-width:690px;margin:0}.auth-art p{color:var(--muted);max-width:560px;line-height:1.6}
-.auth-box-wrap{display:grid;place-items:center;padding:24px}.auth-box{width:min(430px,100%);background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:18px}.tabs button.active{background:var(--panel3);border-color:#4b4b59}
-.field{margin:12px 0}.field label{display:block;margin-bottom:7px;font-size:12px;font-weight:900;color:#cacad3}.error{min-height:20px;color:#ff8fa0;font-size:13px;margin-top:8px}
-.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);padding:22px 15px;background:#0d0d11}
-.nav{display:flex;flex-direction:column;gap:7px;margin-top:28px}.nav button{text-align:left;background:transparent;border-color:transparent;color:var(--muted)}.nav button.active,.nav button:hover{background:var(--panel2);color:var(--text)}
-.account{position:absolute;left:15px;right:15px;bottom:16px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px}.account strong{display:block}.main{padding:24px 28px 60px;min-width:0}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px}.topbar h1{margin:0;font-size:26px}
-.hero{margin-top:24px;border:1px solid var(--line);border-radius:25px;padding:28px;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;background:radial-gradient(circle at 80% 10%,rgba(115,87,255,.27),transparent 34%),linear-gradient(135deg,#181821,#101015)}
-.hero h2{font-size:40px;line-height:1.03;max-width:720px;margin:0 0 10px}.hero p{max-width:650px;color:var(--muted);line-height:1.55}
-.section{margin-top:30px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:12px}.section-head h2{margin:0;font-size:21px}
-.room-list{display:grid;gap:9px}.room-card{display:grid;grid-template-columns:1.5fr 1fr .6fr auto;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px}.room-card .title{font-weight:900}.pill{display:inline-flex;align-items:center;gap:6px;color:#c9c9d2;font-size:12px}.dot{width:7px;height:7px;background:var(--ok);border-radius:50%}
-.empty{padding:35px;border:1px dashed var(--line);border-radius:16px;text-align:center;color:var(--muted)}
-.modal-bg{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);display:grid;place-items:center;padding:18px}.modal{width:min(570px,100%);background:#111116;border:1px solid var(--line);border-radius:22px;padding:22px}.modal h2{margin:0 0 18px}
-.segment{display:grid;grid-template-columns:1fr 1fr;gap:7px}.segment button.active{border-color:#725fff;background:rgba(115,87,255,.14);color:#d6ceff}
-.help{font-size:12px;color:var(--muted);line-height:1.45;margin-top:7px}
-.room-page{height:100vh;padding:12px;display:flex;flex-direction:column;gap:10px}.room-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.room-left{display:flex;align-items:center;gap:10px}.room-left h1{font-size:16px;margin:0}.controls{display:flex;gap:7px}.controls button{width:43px;height:43px;padding:0;border-radius:50%}.controls .off{background:rgba(255,83,107,.13);color:#ff9bac}
-.room-layout{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:10px}.watch{min-width:0;display:grid;grid-template-rows:minmax(0,1fr) 150px;gap:10px}.player-wrap{background:#000;border:1px solid #202027;border-radius:17px;overflow:hidden;position:relative}.player-wrap video{width:100%;height:100%;object-fit:contain;background:#000}.sync{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.6);padding:7px 9px;border-radius:9px;font-size:11px;font-weight:800}
-.cams{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;overflow:auto}.cam{position:relative;background:#16161c;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-height:120px}.cam video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}.avatar{width:100%;height:100%;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#383846,#1a1a21);font-size:27px;font-weight:950}.cam-name{position:absolute;left:7px;bottom:7px;background:rgba(0,0,0,.6);padding:4px 6px;border-radius:7px;font-size:10px;font-weight:800}
-.side{background:var(--panel);border:1px solid var(--line);border-radius:17px;display:grid;grid-template-rows:auto 1fr auto;min-height:0}.side-title{padding:12px;border-bottom:1px solid var(--line);font-weight:900}.chat{overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px}.msg{max-width:88%;background:#1c1c23;padding:8px 9px;border-radius:11px;font-size:12px;line-height:1.4}.msg.me{align-self:flex-end;background:#4934ad}.msg small{display:block;color:#b9b9c3;font-weight:800;margin-bottom:3px}.composer{display:flex;gap:6px;padding:9px;border-top:1px solid var(--line)}.composer input{min-width:0}
-.admin{display:grid;gap:14px}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.stat b{display:block;font-size:28px;margin-top:5px}.admin-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;min-width:0}.panel h3{margin:0 0 12px}.table{display:grid;gap:7px;max-height:520px;overflow:auto}.user-row,.admin-room{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#17171d;border:1px solid #24242d;border-radius:12px;padding:10px}.badge-admin{font-size:10px;padding:4px 6px;border-radius:7px;background:rgba(115,87,255,.15);color:#cfc7ff}
-.toast{position:fixed;left:50%;bottom:20px;z-index:50;transform:translateX(-50%) translateY(20px);opacity:0;background:#212128;border:1px solid #363641;border-radius:11px;padding:10px 13px;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%)}
-@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.admin-grid{grid-template-columns:1fr}.room-layout{grid-template-columns:1fr}.side{height:360px}.room-page{height:auto;min-height:100vh}.watch{height:690px}.room-card{grid-template-columns:1fr auto}.room-card .hide-sm{display:none}}
-@media(max-width:760px){.auth-page{grid-template-columns:1fr}.auth-art{display:none}.shell{grid-template-columns:1fr}.sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}.nav{flex-direction:row;overflow:auto}.account{position:static;margin-top:12px}.main{padding:16px 14px 50px}.hero{min-height:330px;padding:20px}.hero h2{font-size:34px}.cams{grid-template-columns:repeat(2,1fr)}.watch{height:590px;grid-template-rows:minmax(0,1fr) 125px}.room-top{align-items:flex-start}.controls{flex-wrap:wrap;justify-content:flex-end}.stats{grid-template-columns:1fr 1fr}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+body{overscroll-behavior:none}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:78px}
+.top{position:sticky;top:0;z-index:10;background:rgba(12,12,14,.91);backdrop-filter:blur(18px);padding:13px 15px 10px;border-bottom:1px solid rgba(255,255,255,.04)}
+.brandrow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-size:21px;font-weight:950;letter-spacing:.12em}
+.brand span{color:var(--gold)}
+.userchip{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
+.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,#5d4930,#d7b36a);display:grid;place-items:center;color:#16120c;font-weight:900}
+.searchbar{display:flex;gap:8px;margin-top:11px}
+.search{flex:1;background:#161619;border:1px solid #242429;color:var(--text);border-radius:12px;padding:11px 13px;outline:none}
+.iconbtn{width:42px;border:1px solid #27272c;background:#17171a;color:var(--text);border-radius:12px}
+.categories{display:flex;gap:7px;overflow:auto;padding:12px 15px 3px;scrollbar-width:none}
+.categories::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;border:1px solid #29292e;background:#151518;color:var(--muted);border-radius:999px;padding:8px 11px;font-size:12px;font-weight:750}
+.chip.active{background:var(--text);color:#111;border-color:transparent}
+.hero{margin:13px 15px 18px;min-height:210px;border-radius:23px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:
+radial-gradient(circle at 78% 20%,rgba(215,179,106,.24),transparent 32%),
+linear-gradient(145deg,#1e1b18,#111113);border:1px solid #27231e}
+.hero:after{content:"精品";position:absolute;right:15px;top:10px;font-size:68px;font-weight:950;color:rgba(255,255,255,.03)}
+.kicker{font-size:10px;letter-spacing:.16em;color:var(--gold2);font-weight:900;text-transform:uppercase}
+.hero h1{font-size:29px;line-height:1.05;margin:7px 0 8px;max-width:430px}
+.hero p{font-size:12px;color:var(--muted);line-height:1.5;margin:0;max-width:430px}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;padding:0 15px;margin:20px 0 11px}
+.sectionhead h2{font-size:17px;margin:0}.sectionhead span{font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 15px}
+.card{background:var(--panel);border:1px solid #222226;border-radius:17px;overflow:hidden;min-width:0}
+.pic{aspect-ratio:1/1;position:relative;display:grid;place-items:center;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover}
+.mock{width:72%;height:55%;border-radius:18px;background:linear-gradient(145deg,#3a3b3f,#121215);box-shadow:0 20px 45px rgba(0,0,0,.35);position:relative}
+.mock:after{content:"JIN";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);letter-spacing:.18em;font-size:12px;color:rgba(255,255,255,.5);font-weight:900}
+.tone-sand{background:linear-gradient(145deg,#9b8669,#3b3024)}
+.tone-silver{background:linear-gradient(145deg,#b9bcc0,#42444a)}
+.tone-ink{background:linear-gradient(145deg,#30333a,#08090b)}
+.tone-cream{background:linear-gradient(145deg,#dccfb6,#6d5b43)}
+.tone-olive{background:linear-gradient(145deg,#727158,#25261f)}
+.badge{position:absolute;top:9px;left:9px;background:rgba(11,11,13,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);padding:5px 7px;border-radius:8px;font-size:9px;font-weight:900}
+.cardbody{padding:11px}
+.title{font-size:13px;font-weight:850;line-height:1.25}
+.subtitle{font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price{margin-top:10px;display:flex;align-items:center;gap:6px}
+.price b{font-size:14px}.old{font-size:10px;color:#68686d;text-decoration:line-through}
+.cardactions{display:flex;gap:6px;margin-top:9px}
+.btn{border:1px solid #2a2a2f;background:#1a1a1e;color:var(--text);border-radius:10px;padding:9px 10px;font-weight:800}
+.btn.primary{background:var(--gold);color:#17120b;border-color:transparent}
+.cardactions .btn{flex:1;font-size:10px;padding:8px}
+.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:20;width:min(720px,100%);height:68px;padding-bottom:env(safe-area-inset-bottom);display:grid;grid-template-columns:repeat(4,1fr);background:rgba(13,13,15,.95);backdrop-filter:blur(18px);border-top:1px solid #242429}
+.bottom button{border:0;background:transparent;color:#77767b;font-size:10px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.bottom i{font-style:normal;font-size:18px}
+.bottom button.active{color:var(--gold2)}
+.page{padding:16px 15px}
+.pagehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.pagehead h1{font-size:24px;margin:0}.pagehead span{font-size:11px;color:var(--muted)}
+.cartitem{display:grid;grid-template-columns:68px 1fr auto;gap:11px;background:var(--panel);border:1px solid #232327;border-radius:14px;padding:10px;margin-bottom:8px}
+.cartpic{width:68px;height:68px;border-radius:11px;background:linear-gradient(145deg,#333,#111);display:grid;place-items:center;font-size:9px;color:#aaa}
+.cartmeta b{font-size:12px}.cartmeta div{font-size:10px;color:var(--muted);margin-top:5px}
+.qty{display:flex;gap:5px;align-items:center;margin-top:8px}.qty button{width:26px;height:26px;padding:0;border:1px solid #2d2d32;background:#1c1c20;color:#fff;border-radius:7px}.qty span{font-size:11px;min-width:16px;text-align:center}
+.remove{border:0;background:transparent;color:#8a6970;font-size:16px}
+.totalbox{background:#171719;border:1px solid #27272b;border-radius:15px;padding:14px;margin-top:14px}
+.totalrow{display:flex;justify-content:space-between;font-size:12px;margin:7px 0}.totalrow.big{font-size:17px;font-weight:900;border-top:1px solid #29292e;padding-top:11px;margin-top:11px}
+.field{margin:11px 0}.field label{display:block;color:#aaa9ad;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;border:1px solid #29292e;background:#151518;color:var(--text);border-radius:11px;padding:11px;outline:none}
+.field textarea{resize:vertical;min-height:80px}
+.shipping{display:grid;gap:7px}.ship{border:1px solid #29292e;background:#151518;border-radius:12px;padding:11px;display:flex;justify-content:space-between;gap:10px}.ship.active{border-color:var(--gold);background:#1c1913}.ship b{font-size:12px}.ship small{display:block;color:var(--muted);margin-top:3px}
+.order{background:var(--panel);border:1px solid #242429;border-radius:14px;padding:12px;margin-bottom:8px}.orderhead{display:flex;justify-content:space-between;gap:10px}.orderhead b{font-size:12px}.status{font-size:9px;border-radius:999px;padding:5px 7px;background:#25262a;color:#aaa}.status.paid,.status.processing{color:#8fdbae;background:#14251c}.status.shipped{color:#8ebcff;background:#172133}.status.delivered{color:#17120b;background:var(--gold)}
+.orderitems{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
+.sheetback{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.67);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:min(720px,100%);max-height:90vh;overflow:auto;background:#131315;border-radius:24px 24px 0 0;border:1px solid #29292d;padding:12px 16px calc(18px + env(safe-area-inset-bottom))}
+.handle{width:42px;height:4px;border-radius:999px;background:#3a3a3f;margin:0 auto 14px}
+.producthero{height:260px;border-radius:18px;background:linear-gradient(145deg,#252529,#0e0e10);display:grid;place-items:center;overflow:hidden}
+.producthero img{width:100%;height:100%;object-fit:cover}
+.producthero .mock{width:45%;height:55%}
+.sheet h2{font-size:23px;margin:15px 0 4px}.sheet .desc{color:var(--muted);font-size:12px;line-height:1.55}
+.specs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.spec{border:1px solid #29292e;border-radius:9px;padding:7px 8px;font-size:10px;color:#bdbcc0}
+.adminstats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.stat{background:var(--panel);border:1px solid #242429;border-radius:13px;padding:12px}.stat small{color:var(--muted);font-size:9px}.stat b{display:block;margin-top:5px;font-size:20px}
+.adminrow{background:var(--panel);border:1px solid #242429;border-radius:13px;padding:11px;margin-bottom:7px}.adminrow b{font-size:11px}.adminrow .sub{font-size:9px;color:var(--muted);margin-top:4px}.adminactions{display:flex;gap:6px;margin-top:8px}.adminactions select,.adminactions input{min-width:0;flex:1;background:#17171a;border:1px solid #2a2a2e;color:#fff;border-radius:8px;padding:8px;font-size:9px}.adminactions button{font-size:9px}
+.notice{background:#1b1914;border:1px solid #3f3522;color:#d8c69e;border-radius:11px;padding:10px 11px;font-size:10px;line-height:1.45;margin-bottom:12px}
+.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:80;background:#ede5d5;color:#16120d;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:800;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%)}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero h1{font-size:34px}}
 </style>
 </head>
 <body>
-
-<section id="authPage" class="auth-page">
-  <div class="auth-art">
-    <div class="logo"><span class="logo-mark">▶</span> WatchRoom</div>
-    <div>
-      <h1>Смотри фильм вместе, даже если вы в разных местах.</h1>
-      <p>Комната, синхронный плеер, звонок, вебка и чат — всё на одном экране.</p>
+<div class="app">
+  <header class="top">
+    <div class="brandrow">
+      <div class="brand">J<span>I</span>N</div>
+      <div class="userchip"><span id="hello">Telegram</span><div class="avatar" id="avatar">T</div></div>
     </div>
-    <div class="muted small">WatchRoom prototype</div>
+    <div class="searchbar">
+      <input id="search" class="search" placeholder="Поиск по каталогу…" oninput="loadProducts()">
+      <button class="iconbtn" onclick="focusCart()">🛍</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="shopPage">
+      <div class="categories" id="categories"></div>
+      <div class="hero">
+        <div class="kicker">Curated in China · shipped to you</div>
+        <h1>Новая Азия без случайного маркетплейса.</h1>
+        <p>Отбираем оригинальные товары независимых брендов и производителей: техника, предметы для дома, аксессуары и travel.</p>
+      </div>
+      <div class="sectionhead"><h2>Подборка</h2><span id="resultCount">0 товаров</span></div>
+      <div id="productGrid" class="grid"></div>
+    </section>
+
+    <section id="cartPage" class="page hidden">
+      <div class="pagehead"><h1>Корзина</h1><span id="cartCount">0 товаров</span></div>
+      <div id="cartItems"></div>
+      <div id="cartSummary"></div>
+    </section>
+
+    <section id="ordersPage" class="page hidden">
+      <div class="pagehead"><h1>Заказы</h1><span>История</span></div>
+      <div id="ordersList"></div>
+    </section>
+
+    <section id="profilePage" class="page hidden">
+      <div class="pagehead"><h1>Профиль</h1><span id="adminBadge"></span></div>
+      <div class="totalbox">
+        <div class="totalrow"><span>Telegram</span><b id="profileUser">@user</b></div>
+        <div class="totalrow"><span>ID</span><b id="profileId">—</b></div>
+        <div class="totalrow"><span>Оплата</span><b id="paymentState">—</b></div>
+      </div>
+      <div style="height:12px"></div>
+      <button id="adminOpen" class="btn primary hidden" style="width:100%" onclick="showAdmin()">Операционное управление</button>
+    </section>
+
+    <section id="adminPage" class="page hidden">
+      <div class="pagehead"><h1>Operations</h1><button class="btn" onclick="showPage('profile')">Назад</button></div>
+      <div class="notice">Админка доступна только Telegram ID из переменной <b>ADMIN_TELEGRAM_IDS</b>.</div>
+      <div id="adminStats" class="adminstats"></div>
+      <div class="sectionhead" style="padding:0;margin-top:20px"><h2>Заказы</h2><span>управление статусами</span></div>
+      <div id="adminOrders"></div>
+      <div class="sectionhead" style="padding:0;margin-top:20px"><h2>Добавить товар</h2><span>каталог</span></div>
+      <div class="field"><label>Название</label><input id="aTitle"></div>
+      <div class="field"><label>Подзаголовок</label><input id="aSubtitle"></div>
+      <div class="field"><label>Категория</label><input id="aCategory" placeholder="Tech"></div>
+      <div class="field"><label>Цена в центах</label><input id="aPrice" type="number" placeholder="12900"></div>
+      <div class="field"><label>Остаток</label><input id="aStock" type="number" placeholder="10"></div>
+      <div class="field"><label>URL изображения</label><input id="aImage" placeholder="https://..."></div>
+      <div class="field"><label>Описание</label><textarea id="aDescription"></textarea></div>
+      <button class="btn primary" style="width:100%" onclick="adminAddProduct()">Добавить товар</button>
+    </section>
+  </main>
+</div>
+
+<nav class="bottom" id="bottomNav">
+  <button class="active" data-page="shop" onclick="showPage('shop')"><i>⌂</i>Каталог</button>
+  <button data-page="cart" onclick="showPage('cart')"><i>🛍</i>Корзина</button>
+  <button data-page="orders" onclick="showPage('orders')"><i>▤</i>Заказы</button>
+  <button data-page="profile" onclick="showPage('profile')"><i>◎</i>Профиль</button>
+</nav>
+
+<div id="productSheet" class="sheetback hidden" onclick="if(event.target===this)closeProduct()">
+  <div class="sheet">
+    <div class="handle"></div>
+    <div id="sheetContent"></div>
   </div>
+</div>
 
-  <div class="auth-box-wrap">
-    <div class="auth-box">
-      <div class="tabs">
-        <button id="loginTab" class="active" onclick="setAuthMode('login')">Вход</button>
-        <button id="registerTab" onclick="setAuthMode('register')">Регистрация</button>
-      </div>
-      <div class="field"><label>@USERNAME</label><input id="authUser" placeholder="@username" autocomplete="username"></div>
-      <div class="field"><label>ПАРОЛЬ</label><input id="authPass" type="password" placeholder="Минимум 6 символов" autocomplete="current-password"></div>
-      <button id="authSubmit" class="primary" style="width:100%" onclick="submitAuth()">Войти</button>
-      <div class="error" id="authError"></div>
-    </div>
-  </div>
-</section>
-
-<section id="app" class="hidden">
-  <div class="shell">
-    <aside class="sidebar">
-      <div class="logo"><span class="logo-mark">▶</span> WatchRoom</div>
-      <nav class="nav">
-        <button class="active" id="homeNav" onclick="showView('homeView')">⌂ Главная</button>
-        <button id="adminNav" class="hidden" onclick="showView('adminView')">⚙ Админ-панель</button>
-      </nav>
-      <div class="account">
-        <strong id="accountName">@user</strong>
-        <span class="small muted" id="accountRole">пользователь</span>
-        <button style="width:100%;margin-top:10px" onclick="logout()">Выйти</button>
-      </div>
-    </aside>
-
-    <main class="main">
-      <div id="homeView">
-        <div class="topbar">
-          <div><h1>Главная</h1><div class="muted small">Смотри вместе с друзьями</div></div>
-          <button class="primary" onclick="openCreate()">＋ Создать комнату</button>
-        </div>
-
-        <section class="hero">
-          <h2>Вставь ссылку на видео — и смотри его вместе.</h2>
-          <p>Без встроенного каталога. Ты сам задаёшь прямую ссылку на видео, создаёшь публичную комнату или комнату по коду, а затем включаешь камеру и микрофон.</p>
-          <div class="row"><button class="primary" onclick="openCreate()">Создать комнату</button><button onclick="document.getElementById('roomsSection').scrollIntoView({behavior:'smooth'})">Найти открытую</button></div>
-        </section>
-
-        <section class="section" id="roomsSection">
-          <div class="section-head"><h2>Открытые комнаты</h2><span class="muted small" id="roomCount">0 онлайн</span></div>
-          <div id="roomList" class="room-list"></div>
-        </section>
-      </div>
-
-      <div id="adminView" class="hidden">
-        <div class="topbar">
-          <div><h1>Админ-панель</h1><div class="muted small">Управление WatchRoom</div></div>
-          <button onclick="loadAdmin()">↻ Обновить</button>
-        </div>
-
-        <section class="section admin">
-          <div class="stats">
-            <div class="stat"><span class="muted small">Пользователи</span><b id="sUsers">0</b></div>
-            <div class="stat"><span class="muted small">Онлайн</span><b id="sOnline">0</b></div>
-            <div class="stat"><span class="muted small">Комнаты</span><b id="sRooms">0</b></div>
-            <div class="stat"><span class="muted small">Публичные</span><b id="sPublic">0</b></div>
-            <div class="stat"><span class="muted small">В комнатах</span><b id="sMembers">0</b></div>
-          </div>
-
-          <div class="admin-grid">
-            <div class="panel">
-              <h3>Пользователи</h3>
-              <div class="table" id="adminUsers"></div>
-            </div>
-            <div class="panel">
-              <h3>Активные комнаты</h3>
-              <div class="table" id="adminRooms"></div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-  </div>
-</section>
-
-<section id="roomPage" class="room-page hidden">
-  <div class="room-top">
-    <div class="room-left">
-      <button onclick="leaveRoom()">←</button>
-      <div>
-        <h1 id="roomName">Комната</h1>
-        <div class="small muted">код <b id="roomCode"></b> · <span id="memberCount">1</span> чел.</div>
-      </div>
-    </div>
-    <div class="controls">
-      <button id="micBtn" class="off" onclick="toggleMic()">🎙</button>
-      <button id="camBtn" class="off" onclick="toggleCam()">📷</button>
-      <button onclick="copyCode()">🔗</button>
-      <button class="danger" onclick="leaveRoom()">✕</button>
-    </div>
-  </div>
-
-  <div class="room-layout">
-    <div class="watch">
-      <div class="player-wrap">
-        <video id="player" controls playsinline></video>
-        <div class="sync">● синхронизировано</div>
-      </div>
-      <div class="cams" id="cams"></div>
-    </div>
-    <aside class="side">
-      <div class="side-title">Чат комнаты</div>
-      <div class="chat" id="chat"></div>
-      <div class="composer"><input id="chatInput" maxlength="300" placeholder="Сообщение..."><button class="primary" onclick="sendChat()">↑</button></div>
-    </aside>
-  </div>
-</section>
-
-<div id="createModal" class="modal-bg hidden">
-  <div class="modal">
-    <h2>Новая комната</h2>
-    <div class="field"><label>НАЗВАНИЕ</label><input id="newRoomName" maxlength="40" placeholder="Киновечер 🍿"></div>
-    <div class="field">
-      <label>ПРЯМАЯ ССЫЛКА НА ВИДЕО</label>
-      <input id="videoUrl" placeholder="https://site.com/movie.mp4">
-      <div class="help">Лучше всего работают прямые ссылки на MP4 / WebM / OGG. Обычная ссылка на страницу YouTube или кино-сайта не является прямым видеофайлом.</div>
-    </div>
-    <div class="field">
-      <label>ДОСТУП</label>
-      <div class="segment">
-        <button id="publicBtn" class="active" onclick="setPrivacy(true)">🌐 Публичная</button>
-        <button id="privateBtn" onclick="setPrivacy(false)">🔒 По коду</button>
-      </div>
-    </div>
-    <div class="row" style="justify-content:flex-end;margin-top:17px">
-      <button onclick="closeCreate()">Отмена</button>
-      <button class="primary" onclick="createRoom()">Создать и войти</button>
-    </div>
+<div id="checkoutSheet" class="sheetback hidden" onclick="if(event.target===this)closeCheckout()">
+  <div class="sheet">
+    <div class="handle"></div>
+    <h2 style="margin-top:0">Оформление</h2>
+    <div class="field"><label>Имя получателя</label><input id="cName"></div>
+    <div class="field"><label>Телефон</label><input id="cPhone" inputmode="tel"></div>
+    <div class="field"><label>Страна</label><input id="cCountry" placeholder="Lithuania"></div>
+    <div class="field"><label>Город</label><input id="cCity"></div>
+    <div class="field"><label>Адрес</label><input id="cAddress"></div>
+    <div class="field"><label>Индекс</label><input id="cPostal"></div>
+    <div class="field"><label>Доставка</label><div id="shippingOptions" class="shipping"></div></div>
+    <div id="checkoutTotal" class="totalbox"></div>
+    <button class="btn primary" style="width:100%;margin-top:12px;padding:13px" onclick="checkout()">Перейти к оплате</button>
   </div>
 </div>
 
 <div id="toast" class="toast"></div>
 
-<script src="/socket.io/socket.io.js"></script>
 <script>
-let authMode = "login";
-let me = null;
-let socket = null;
-let isPublic = true;
-let currentRoom = null;
-let localStream = null;
-let peers = new Map();
-let applyingRemote = false;
-
-const $ = s => document.querySelector(s);
-const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-
-function toast(text){
-  const e=$("#toast");e.textContent=text;e.classList.add("show");
-  clearTimeout(window.__t);window.__t=setTimeout(()=>e.classList.remove("show"),1800);
+const tg = window.Telegram?.WebApp;
+if(tg){
+  tg.ready();
+  tg.expand();
+  try{tg.setHeaderColor("#0c0c0e");tg.setBackgroundColor("#0c0c0e")}catch{}
 }
 
-function setAuthMode(mode){
-  authMode=mode;
-  $("#loginTab").classList.toggle("active",mode==="login");
-  $("#registerTab").classList.toggle("active",mode==="register");
-  $("#authSubmit").textContent=mode==="login"?"Войти":"Создать аккаунт";
-  $("#authError").textContent="";
+let config=null, products=[], category="All", cart=JSON.parse(localStorage.getItem("jin-cart")||"[]"), selectedProduct=null, selectedShipping="standard";
+
+function initData(){ return tg?.initData || ""; }
+async function api(url,opt={}){
+  opt.headers=Object.assign({},opt.headers||{},{"x-telegram-init-data":initData()});
+  const r=await fetch(url,opt);
+  let d={};try{d=await r.json()}catch{}
+  if(!r.ok)throw new Error(d.details||d.error||"Ошибка");
+  return d;
 }
-
-async function submitAuth(){
-  $("#authError").textContent="";
-  const username=$("#authUser").value.trim();
-  const password=$("#authPass").value;
-  const url=authMode==="login"?"/api/login":"/api/register";
-  const res=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})});
-  const data=await res.json();
-  if(!res.ok){
-    const map={INVALID_LOGIN:"Неверный username или пароль",USERNAME_TAKEN:"Этот username уже занят",BAD_USERNAME:"Username: 3–24 символа, буквы/цифры/_",BAD_PASSWORD:"Пароль должен быть от 6 символов",BANNED:"Аккаунт заблокирован"};
-    $("#authError").textContent=map[data.error]||"Не удалось выполнить действие";
-    return;
-  }
-  me=data.user;
-  startApp();
+function money(cents){
+  const cur=config?.currency||"EUR";
+  try{return new Intl.NumberFormat("ru-RU",{style:"currency",currency:cur,maximumFractionDigits:2}).format(cents/100)}
+  catch{return (cents/100).toFixed(2)+" "+cur}
 }
-
-async function checkSession(){
-  const res=await fetch("/api/me");
-  const data=await res.json();
-  if(data.user){me=data.user;startApp()}
+function toast(t){
+  const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");
+  clearTimeout(window.__t);window.__t=setTimeout(()=>e.classList.remove("show"),1500);
 }
-checkSession();
+function saveCart(){localStorage.setItem("jin-cart",JSON.stringify(cart));renderCart();}
 
-function startApp(){
-  $("#authPage").classList.add("hidden");
-  $("#app").classList.remove("hidden");
-  $("#accountName").textContent="@"+me.username;
-  $("#accountRole").textContent=me.role==="admin"?"администратор":"пользователь";
-  $("#adminNav").classList.toggle("hidden",me.role!=="admin");
-  connectSocket();
-}
-
-async function logout(){
-  await fetch("/api/logout",{method:"POST"});
-  location.reload();
-}
-
-function connectSocket(){
-  if(socket) socket.disconnect();
-  socket=io();
-
-  socket.on("connect_error",()=>toast("Не удалось подключиться"));
-  socket.on("rooms-list",renderRooms);
-  socket.on("force-logout",()=>{toast("Аккаунт заблокирован");setTimeout(()=>location.reload(),700)});
-  socket.on("room-closed",()=>{toast("Комната закрыта администратором");setTimeout(()=>leaveRoom(),800)});
-  socket.on("member-count",n=>$("#memberCount").textContent=n);
-  socket.on("member-joined",({id,username})=>{
-    addMsg("WatchRoom",`@${username} присоединился`,false);
-  });
-  socket.on("member-left",({id})=>{
-    const p=peers.get(id);if(p)p.pc.close();peers.delete(id);renderCams();
-  });
-  socket.on("signal",handleSignal);
-  socket.on("player-state",st=>applyPlayerState(st,false));
-  socket.on("chat",m=>addMsg("@"+m.nick,m.text,m.sender===socket.id));
-}
-
-function renderRooms(list){
-  $("#roomCount").textContent=list.length+" онлайн";
-  const box=$("#roomList");
-  if(!list.length){
-    box.innerHTML=`<div class="empty">Пока нет публичных комнат.<br><span class="small">Создай первую комнату по своей ссылке на фильм.</span></div>`;
-    return;
-  }
-  box.innerHTML=list.map(r=>`
-    <div class="room-card">
-      <div><div class="title">${escapeHtml(r.name)}</div><div class="small muted">создал @${escapeHtml(r.owner)}</div></div>
-      <div class="hide-sm small muted">видео по ссылке</div>
-      <div class="hide-sm"><span class="pill"><span class="dot"></span>${r.count} чел.</span></div>
-      <button class="primary" onclick="joinRoom('${r.id}')">Войти</button>
-    </div>`).join("");
-}
-
-function openCreate(){$("#createModal").classList.remove("hidden");setTimeout(()=>$("#newRoomName").focus(),50)}
-function closeCreate(){$("#createModal").classList.add("hidden")}
-function setPrivacy(v){
-  isPublic=v;
-  $("#publicBtn").classList.toggle("active",v);
-  $("#privateBtn").classList.toggle("active",!v);
-}
-function makeCode(){
-  const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  return Array.from({length:5},()=>c[Math.floor(Math.random()*c.length)]).join("");
-}
-
-function createRoom(){
-  const name=$("#newRoomName").value.trim()||"Киновечер";
-  const videoUrl=$("#videoUrl").value.trim();
-  if(!/^https?:\/\//i.test(videoUrl)) return toast("Вставь корректную http/https ссылку");
-  const roomId=makeCode();
-
-  socket.emit("create-room",{roomId,name,videoUrl,isPublic},res=>{
-    if(!res?.ok) return toast(res?.error==="BAD_URL"?"Ссылка не подходит":"Не удалось создать комнату");
-    closeCreate();
-    joinRoom(roomId);
-  });
-}
-
-function joinRoom(roomId){
-  socket.emit("join-room",{roomId},async res=>{
-    if(!res?.ok)return toast("Комната уже закрыта");
-    currentRoom=res.room;
-    $("#app").classList.add("hidden");
-    $("#roomPage").classList.remove("hidden");
-    $("#roomName").textContent=currentRoom.name;
-    $("#roomCode").textContent=currentRoom.id;
-    $("#memberCount").textContent=currentRoom.members.length+1;
-    $("#chat").innerHTML="";
-    addMsg("WatchRoom","Вы вошли в комнату.",false);
-
-    const p=$("#player");
-    p.src=currentRoom.videoUrl;
-    p.load();
-
-    await startMedia();
-    for(const m of currentRoom.members){
-      await createPeer(m.id,true,m.username);
-    }
-    applyPlayerState(currentRoom.playerState,true);
-  });
-}
-
-async function startMedia(){
+async function boot(){
   try{
-    localStream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
-    $("#micBtn").classList.remove("off");$("#camBtn").classList.remove("off");
-  }catch{
-    localStream=null;
-    toast("Можно смотреть без камеры и микрофона");
+    config=await api("/api/config");
+    const u=config.user;
+    document.getElementById("hello").textContent=u.first_name||u.username||"Telegram";
+    document.getElementById("avatar").textContent=(u.first_name||u.username||"T").slice(0,1).toUpperCase();
+    document.getElementById("profileUser").textContent="@"+(u.username||"telegram_user");
+    document.getElementById("profileId").textContent=u.id;
+    document.getElementById("paymentState").textContent=config.paymentsReady?"Подключена":"Demo / не подключена";
+    if(config.isAdmin){
+      document.getElementById("adminBadge").textContent="ADMIN";
+      document.getElementById("adminOpen").classList.remove("hidden");
+    }
+    renderCategories();
+    await loadProducts();
+    renderCart();
+  }catch(e){
+    document.body.innerHTML=`<div class="empty" style="padding-top:100px"><b>Откройте магазин из Telegram</b>${e.message}</div>`;
   }
-  renderCams();
 }
 
-function renderCams(){
-  const box=$("#cams");box.innerHTML="";
-  const meCard=document.createElement("div");meCard.className="cam";
-  if(localStream){
-    const v=document.createElement("video");v.autoplay=true;v.muted=true;v.playsInline=true;v.srcObject=localStream;meCard.appendChild(v);
-  }else{
-    const a=document.createElement("div");a.className="avatar";a.textContent="Я";meCard.appendChild(a);
-  }
-  meCard.insertAdjacentHTML("beforeend",`<div class="cam-name">Вы</div>`);
-  box.appendChild(meCard);
+function renderCategories(){
+  const cats=["All","Tech","Audio","Home","Bags","Travel"];
+  document.getElementById("categories").innerHTML=cats.map(c=>`<button class="chip ${category===c?"active":""}" onclick="setCategory('${c}')">${c==="All"?"Все":c}</button>`).join("");
+}
+function setCategory(c){category=c;renderCategories();loadProducts();}
+async function loadProducts(){
+  const q=document.getElementById("search")?.value||"";
+  const d=await api(`/api/products?q=${encodeURIComponent(q)}&category=${encodeURIComponent(category)}`);
+  products=d.products;
+  document.getElementById("resultCount").textContent=products.length+" товаров";
+  document.getElementById("productGrid").innerHTML=products.length?products.map(cardHtml).join(""):`<div class="empty" style="grid-column:1/-1"><b>Ничего не найдено</b>Попробуйте другой запрос.</div>`;
+}
+function imageHtml(p,cls="pic"){
+  if(p.image)return `<div class="${cls}"><img src="${p.image}" alt=""></div>`;
+  return `<div class="${cls} tone-${p.tone||"ink"}"><div class="mock"></div></div>`;
+}
+function cardHtml(p){
+  return `<article class="card">
+    <div class="pic tone-${p.tone||"ink"}">${p.image?`<img src="${p.image}" alt="">`:`<div class="mock"></div>`}${p.badge?`<span class="badge">${p.badge}</span>`:""}</div>
+    <div class="cardbody">
+      <div class="title">${esc(p.title)}</div><div class="subtitle">${esc(p.subtitle)}</div>
+      <div class="price"><b>${money(p.price)}</b>${p.oldPrice?`<span class="old">${money(p.oldPrice)}</span>`:""}</div>
+      <div class="cardactions"><button class="btn" onclick="openProduct('${p.id}')">Подробнее</button><button class="btn primary" onclick="addToCart('${p.id}')">＋</button></div>
+    </div>
+  </article>`;
+}
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 
-  for(const [id,p] of peers){
-    const card=document.createElement("div");card.className="cam";
-    if(p.stream){
-      const v=document.createElement("video");v.autoplay=true;v.playsInline=true;v.srcObject=p.stream;card.appendChild(v);
+function openProduct(id){
+  selectedProduct=products.find(p=>p.id===id);
+  if(!selectedProduct)return;
+  const p=selectedProduct;
+  document.getElementById("sheetContent").innerHTML=`
+    <div class="producthero tone-${p.tone||"ink"}">${p.image?`<img src="${p.image}">`:`<div class="mock"></div>`}</div>
+    <div class="kicker" style="margin-top:14px">${esc(p.category)} · ${p.stock} in stock</div>
+    <h2>${esc(p.title)}</h2><div class="subtitle" style="font-size:12px">${esc(p.subtitle)}</div>
+    <div class="price" style="margin-top:13px"><b style="font-size:20px">${money(p.price)}</b>${p.oldPrice?`<span class="old">${money(p.oldPrice)}</span>`:""}</div>
+    <p class="desc">${esc(p.description)}</p>
+    <div class="specs">${(p.specs||[]).map(x=>`<span class="spec">${esc(x)}</span>`).join("")}</div>
+    <button class="btn primary" style="width:100%;padding:13px" onclick="addToCart('${p.id}');closeProduct()">Добавить в корзину · ${money(p.price)}</button>`;
+  document.getElementById("productSheet").classList.remove("hidden");
+}
+function closeProduct(){document.getElementById("productSheet").classList.add("hidden")}
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const found=cart.find(x=>x.productId===id);
+  if(found)found.qty=Math.min(10,found.qty+1);else cart.push({productId:id,qty:1});
+  saveCart();toast("Добавлено в корзину");
+  try{tg?.HapticFeedback?.impactOccurred("light")}catch{}
+}
+function changeQty(id,d){
+  const x=cart.find(i=>i.productId===id);if(!x)return;
+  x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.productId!==id);
+  saveCart();
+}
+function cartProducts(){
+  return cart.map(i=>({item:i,p:products.find(p=>p.id===i.productId)})).filter(x=>x.p);
+}
+function renderCart(){
+  const arr=cartProducts(), count=arr.reduce((n,x)=>n+x.item.qty,0);
+  document.getElementById("cartCount").textContent=count+" товаров";
+  const list=document.getElementById("cartItems");
+  if(!arr.length){
+    list.innerHTML='<div class="empty"><b>Корзина пуста</b>Добавьте что-нибудь из каталога.</div>';
+    document.getElementById("cartSummary").innerHTML="";
+    return;
+  }
+  list.innerHTML=arr.map(({item,p})=>`<div class="cartitem">
+    <div class="cartpic tone-${p.tone||"ink"}">JIN</div>
+    <div class="cartmeta"><b>${esc(p.title)}</b><div>${money(p.price)}</div><div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><span>${item.qty}</span><button onclick="changeQty('${p.id}',1)">＋</button></div></div>
+    <button class="remove" onclick="changeQty('${p.id}',-${item.qty})">×</button>
+  </div>`).join("");
+  const subtotal=arr.reduce((n,x)=>n+x.p.price*x.item.qty,0);
+  document.getElementById("cartSummary").innerHTML=`<div class="totalbox"><div class="totalrow"><span>Товары</span><b>${money(subtotal)}</b></div><div class="totalrow"><span>Доставка</span><span class="muted">на следующем шаге</span></div></div><button class="btn primary" style="width:100%;margin-top:10px;padding:13px" onclick="openCheckout()">Оформить заказ</button>`;
+}
+function focusCart(){showPage("cart")}
+
+function openCheckout(){
+  if(!cart.length)return;
+  const u=config.user;
+  document.getElementById("cName").value=[u.first_name,u.last_name].filter(Boolean).join(" ");
+  renderShipping();
+  document.getElementById("checkoutSheet").classList.remove("hidden");
+}
+function closeCheckout(){document.getElementById("checkoutSheet").classList.add("hidden")}
+function renderShipping(){
+  document.getElementById("shippingOptions").innerHTML=config.shippingMethods.map(s=>`<button class="ship ${selectedShipping===s.id?"active":""}" onclick="selectedShipping='${s.id}';renderShipping()"><span><b>${s.title}</b><small>${s.subtitle}</small></span><b>${money(s.price)}</b></button>`).join("");
+  const subtotal=cartProducts().reduce((n,x)=>n+x.p.price*x.item.qty,0);
+  const ship=config.shippingMethods.find(s=>s.id===selectedShipping);
+  document.getElementById("checkoutTotal").innerHTML=`<div class="totalrow"><span>Товары</span><b>${money(subtotal)}</b></div><div class="totalrow"><span>Доставка</span><b>${money(ship.price)}</b></div><div class="totalrow big"><span>Итого</span><b>${money(subtotal+ship.price)}</b></div>`;
+}
+async function checkout(){
+  const payload={
+    items:cart,
+    shippingMethod:selectedShipping,
+    address:{
+      name:document.getElementById("cName").value.trim(),
+      phone:document.getElementById("cPhone").value.trim(),
+      country:document.getElementById("cCountry").value.trim(),
+      city:document.getElementById("cCity").value.trim(),
+      address1:document.getElementById("cAddress").value.trim(),
+      postalCode:document.getElementById("cPostal").value.trim()
+    }
+  };
+  try{
+    const d=await api("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    if(d.invoiceUrl && tg?.openInvoice){
+      tg.openInvoice(d.invoiceUrl,status=>{
+        if(status==="paid"){
+          cart=[];saveCart();closeCheckout();toast("Оплата прошла");showPage("orders");loadOrders();
+        }else if(status==="failed")toast("Оплата не прошла");
+      });
+    }else if(d.demo){
+      toast("Demo-заказ создан · "+d.orderId);
+      closeCheckout();showPage("orders");loadOrders();
     }else{
-      const a=document.createElement("div");a.className="avatar";a.textContent=(p.username||"?").slice(0,1).toUpperCase();card.appendChild(a);
+      toast("Заказ создан");
     }
-    card.insertAdjacentHTML("beforeend",`<div class="cam-name">@${escapeHtml(p.username||"user")}</div>`);
-    box.appendChild(card);
-  }
+  }catch(e){toast(e.message)}
 }
 
-async function createPeer(id,initiator,username){
-  if(peers.has(id))return peers.get(id).pc;
-  const pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]});
-  const rec={pc,username,stream:null};peers.set(id,rec);
-
-  if(localStream)localStream.getTracks().forEach(t=>pc.addTrack(t,localStream));
-  pc.onicecandidate=e=>{if(e.candidate)socket.emit("signal",{target:id,data:{candidate:e.candidate}})};
-  pc.ontrack=e=>{rec.stream=e.streams[0];renderCams()};
-  pc.onconnectionstatechange=()=>{if(["failed","closed","disconnected"].includes(pc.connectionState)){peers.delete(id);renderCams()}};
-
-  if(initiator){
-    const offer=await pc.createOffer();
-    await pc.setLocalDescription(offer);
-    socket.emit("signal",{target:id,data:{sdp:pc.localDescription}});
-  }
-  renderCams();
-  return pc;
+async function loadOrders(){
+  const d=await api("/api/orders/mine");
+  document.getElementById("ordersList").innerHTML=d.orders.length?d.orders.map(orderHtml).join(""):'<div class="empty"><b>Заказов пока нет</b>Оформите первую покупку в каталоге.</div>';
+}
+const statusNames={awaiting_payment:"Ожидает оплаты",paid:"Оплачен",processing:"Собирается",shipped:"Отправлен",delivered:"Доставлен",cancelled:"Отменён"};
+function orderHtml(o){
+  return `<div class="order"><div class="orderhead"><b>${o.id}</b><span class="status ${o.status}">${statusNames[o.status]||o.status}</span></div><div class="orderitems">${o.items.map(i=>`${esc(i.title)} ×${i.qty}`).join("<br>")}<br><b style="color:#ddd">${money(o.total)}</b>${o.tracking?`<br>Tracking: ${esc(o.tracking)}`:""}</div></div>`;
 }
 
-async function handleSignal({from,username,data}){
-  let rec=peers.get(from);
-  if(!rec){await createPeer(from,false,username);rec=peers.get(from)}
-  const pc=rec.pc;
-  if(data.sdp){
-    await pc.setRemoteDescription(new RTCSessionDescription(data.sdp));
-    if(data.sdp.type==="offer"){
-      const ans=await pc.createAnswer();
-      await pc.setLocalDescription(ans);
-      socket.emit("signal",{target:from,data:{sdp:pc.localDescription}});
-    }
-  }else if(data.candidate){
-    try{await pc.addIceCandidate(new RTCIceCandidate(data.candidate))}catch{}
-  }
+function showPage(p){
+  ["shop","cart","orders","profile","admin"].forEach(x=>document.getElementById(x+"Page").classList.toggle("hidden",x!==p));
+  document.querySelectorAll(".bottom button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));
+  document.getElementById("bottomNav").classList.toggle("hidden",p==="admin");
+  if(p==="orders")loadOrders();
+  if(p==="cart")renderCart();
 }
-
-function emitPlayer(){
-  if(!currentRoom||applyingRemote)return;
-  const p=$("#player");
-  socket.emit("player-state",{roomId:currentRoom.id,time:p.currentTime,playing:!p.paused});
-}
-["play","pause","seeked"].forEach(ev=>$("#player").addEventListener(ev,emitPlayer));
-
-function applyPlayerState(st,initial){
-  if(!currentRoom)return;
-  const p=$("#player");
-  applyingRemote=true;
-  let target=Number(st.time)||0;
-  if(st.playing&&st.updatedAt)target+=(Date.now()-st.updatedAt)/1000;
-  if(initial||Math.abs(p.currentTime-target)>1)p.currentTime=target;
-  if(st.playing)p.play().catch(()=>{});else p.pause();
-  setTimeout(()=>applyingRemote=false,120);
-}
-
-function toggleMic(){
-  if(!localStream)return toast("Разреши микрофон в браузере");
-  const t=localStream.getAudioTracks()[0];if(!t)return;
-  t.enabled=!t.enabled;$("#micBtn").classList.toggle("off",!t.enabled);
-}
-function toggleCam(){
-  if(!localStream)return toast("Разреши камеру в браузере");
-  const t=localStream.getVideoTracks()[0];if(!t)return;
-  t.enabled=!t.enabled;$("#camBtn").classList.toggle("off",!t.enabled);
-}
-
-function sendChat(){
-  const i=$("#chatInput"),text=i.value.trim();if(!text||!currentRoom)return;
-  socket.emit("chat",{roomId:currentRoom.id,text});i.value="";
-}
-$("#chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat()});
-function addMsg(nick,text,meMsg){
-  const d=document.createElement("div");d.className="msg"+(meMsg?" me":"");
-  d.innerHTML=`<small>${escapeHtml(nick)}</small>${escapeHtml(text)}`;
-  $("#chat").appendChild(d);$("#chat").scrollTop=$("#chat").scrollHeight;
-}
-
-async function copyCode(){
-  if(!currentRoom)return;
-  try{await navigator.clipboard.writeText(currentRoom.id);toast("Код скопирован: "+currentRoom.id)}
-  catch{toast("Код: "+currentRoom.id)}
-}
-
-function leaveRoom(){
-  for(const [,p] of peers)p.pc.close();peers.clear();
-  if(localStream)localStream.getTracks().forEach(t=>t.stop());
-  localStream=null;
-  location.reload();
-}
-
-function showView(id){
-  $("#homeView").classList.toggle("hidden",id!=="homeView");
-  $("#adminView").classList.toggle("hidden",id!=="adminView");
-  $("#homeNav").classList.toggle("active",id==="homeView");
-  $("#adminNav").classList.toggle("active",id==="adminView");
-  if(id==="adminView")loadAdmin();
-}
-
+async function showAdmin(){showPage("admin");await loadAdmin()}
 async function loadAdmin(){
-  if(me?.role!=="admin")return;
-  const [s,u,r]=await Promise.all([
-    fetch("/api/admin/stats").then(x=>x.json()),
-    fetch("/api/admin/users").then(x=>x.json()),
-    fetch("/api/admin/rooms").then(x=>x.json())
-  ]);
-
-  $("#sUsers").textContent=s.users||0;
-  $("#sOnline").textContent=s.onlineUsers||0;
-  $("#sRooms").textContent=s.activeRooms||0;
-  $("#sPublic").textContent=s.publicRooms||0;
-  $("#sMembers").textContent=s.totalRoomMembers||0;
-
-  $("#adminUsers").innerHTML=(u.users||[]).map(x=>`
-    <div class="user-row">
-      <div>
-        <b>@${escapeHtml(x.username)}</b>
-        ${x.role==="admin"?'<span class="badge-admin">ADMIN</span>':""}
-        <div class="small muted">${x.online?"🟢 онлайн":"⚫ офлайн"} · ${x.banned?"заблокирован":"активен"}</div>
-      </div>
-      ${x.role==="admin"?"":`<button onclick="setBan('${x.id}',${!x.banned})">${x.banned?"Разблок.":"Блок."}</button>`}
-    </div>`).join("");
-
-  $("#adminRooms").innerHTML=(r.rooms||[]).length
-    ? r.rooms.map(x=>`
-      <div class="admin-room">
-        <div><b>${escapeHtml(x.name)}</b><div class="small muted">@${escapeHtml(x.owner)} · ${x.count} чел. · ${x.isPublic?"public":"private"}</div></div>
-        <button class="danger" onclick="deleteRoom('${x.id}')">Удалить</button>
-      </div>`).join("")
-    : `<div class="muted small">Активных комнат нет.</div>`;
+  const [s,o]=await Promise.all([api("/api/admin/stats"),api("/api/admin/orders")]);
+  document.getElementById("adminStats").innerHTML=[
+    ["Товары",s.products],["Заказы",s.orders],["Выручка",money(s.revenue)],["Мало на складе",s.lowStock]
+  ].map(x=>`<div class="stat"><small>${x[0]}</small><b>${x[1]}</b></div>`).join("");
+  document.getElementById("adminOrders").innerHTML=o.orders.length?o.orders.map(x=>`<div class="adminrow"><b>${x.id} · ${money(x.total)}</b><div class="sub">@${esc(x.telegramUsername||"user")} · ${esc(x.customerName)} · ${statusNames[x.status]||x.status}</div><div class="adminactions"><select id="st_${x.id}">${Object.keys(statusNames).map(s=>`<option value="${s}" ${s===x.status?"selected":""}>${statusNames[s]}</option>`).join("")}</select><input id="tr_${x.id}" placeholder="Tracking" value="${esc(x.tracking||"")}"><button class="btn primary" onclick="adminSaveOrder('${x.id}')">OK</button></div></div>`).join(""):'<div class="empty">Нет заказов.</div>';
+}
+async function adminSaveOrder(id){
+  await api(`/api/admin/orders/${id}/status`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({status:document.getElementById("st_"+id).value,tracking:document.getElementById("tr_"+id).value})});
+  toast("Заказ обновлён");loadAdmin();
+}
+async function adminAddProduct(){
+  const body={
+    title:document.getElementById("aTitle").value,
+    subtitle:document.getElementById("aSubtitle").value,
+    category:document.getElementById("aCategory").value,
+    price:Number(document.getElementById("aPrice").value),
+    stock:Number(document.getElementById("aStock").value),
+    image:document.getElementById("aImage").value,
+    description:document.getElementById("aDescription").value,
+    tone:"ink"
+  };
+  await api("/api/admin/products",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  toast("Товар добавлен");await loadProducts();
 }
 
-async function setBan(id,banned){
-  await fetch(`/api/admin/users/${id}/ban`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({banned})});
-  loadAdmin();
-}
-async function deleteRoom(id){
-  await fetch(`/api/admin/rooms/${id}`,{method:"DELETE"});
-  loadAdmin();
-}
+boot();
 </script>
 </body>
 </html>

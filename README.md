@@ -1,39 +1,77 @@
-# WatchRoom v2
+# JIN — Telegram Mini App E-commerce
 
-Что изменено:
-- полностью удалён стартовый каталог Big Buck Bunny / Sintel / Tears of Steel / Elephant’s Dream;
-- комната создаётся по вставленной прямой ссылке на видео;
-- регистрация и вход через @username + пароль;
-- фиксированный администратор:
-  - username: @админ67
-  - password: 220419
-- серверная авторизация через cookie-session;
-- пароли хранятся в виде bcrypt-хэшей;
-- данные пользователей сохраняются в users.json;
-- админ-панель:
-  - количество пользователей;
-  - онлайн-пользователи;
-  - активные комнаты;
-  - количество публичных комнат;
-  - количество участников во всех комнатах;
-  - список пользователей;
-  - блокировка/разблокировка пользователей;
-  - список активных комнат;
-  - принудительное удаление комнаты;
-- WebRTC камера/микрофон;
-- синхронный play/pause/seek;
-- чат комнаты;
-- публичные и приватные комнаты по коду.
+MVP Telegram Mini App для продажи премиальных физических товаров из Китая.
 
-Запуск:
-1. Установить Node.js 18+
-2. npm install
-3. npm start
-4. открыть http://localhost:3000
+## Уже реализовано
+- авторизация через Telegram Mini App `initData` с серверной проверкой подписи;
+- каталог товаров без отдельной регистрации;
+- поиск и категории;
+- карточка товара;
+- корзина и изменение количества;
+- checkout;
+- адрес доставки;
+- Standard / Express доставка;
+- создание Telegram invoice для физических товаров;
+- открытие invoice через `Telegram.WebApp.openInvoice`;
+- «Мои заказы»;
+- статусы: awaiting payment / paid / processing / shipped / delivered / cancelled;
+- tracking number;
+- админ-статистика;
+- список заказов и смена статуса;
+- добавление товаров;
+- учёт остатков после `successful_payment`;
+- хранение данных в `db.json` для MVP.
 
-Важно:
-- Вставляй прямую http/https-ссылку на видеофайл (например .mp4/.webm/.ogg).
-- Ссылка на обычную страницу YouTube/кино-сайта не является прямым видеофайлом.
-- Для камеры и микрофона на реальном домене нужен HTTPS.
-- Для стабильных звонков в продакшене нужен TURN-сервер.
-- Для публичного сервиса используй только видео, на которое у тебя есть права или разрешение.
+## Важно
+Этот шаблон рассчитан на легальные оригинальные товары/бренды. Не используйте его для контрафакта.
+
+## Локальный запуск
+```bash
+npm install
+npm start
+```
+
+По умолчанию `DEV_MODE=true`, поэтому приложение можно открыть обычным браузером.
+
+## Telegram
+1. Создайте бота в @BotFather.
+2. Создайте Mini App / задайте Web App URL на ваш HTTPS-домен.
+3. Добавьте `BOT_TOKEN`.
+4. В BotFather: Bot Settings -> Payments подключите payment provider для физических товаров.
+5. Добавьте `PAYMENT_PROVIDER_TOKEN`.
+6. Укажите свой цифровой Telegram ID в `ADMIN_TELEGRAM_IDS`.
+7. На production установите `DEV_MODE=false`.
+
+## Webhook платежей
+После деплоя установите webhook бота на:
+`https://YOUR_DOMAIN/api/telegram/webhook`
+
+Например Bot API методом `setWebhook`.
+
+Без webhook приложение сможет создать invoice, но заказ не перейдёт автоматически в `paid` после SuccessfulPayment.
+
+## Railway
+Переменные:
+- `BOT_TOKEN`
+- `PAYMENT_PROVIDER_TOKEN`
+- `ADMIN_TELEGRAM_IDS`
+- `CURRENCY=EUR`
+- `DEV_MODE=false`
+
+Start Command:
+`npm start`
+
+После Deploy:
+Settings -> Networking -> Generate Domain
+
+## Для production
+Для настоящего магазина стоит заменить `db.json` на PostgreSQL и добавить:
+- S3/R2 для изображений;
+- supplier/warehouse integration;
+- реальный tracking API;
+- возвраты/refunds;
+- промокоды;
+- CMS;
+- журнал действий администраторов;
+- tax/VAT calculation;
+- privacy/terms/refund policies.
