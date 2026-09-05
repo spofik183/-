@@ -2,416 +2,285 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#0d0d0f">
-<title>JIN — curated China</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STRIKEPOINT ONLINE</title>
 <style>
-:root{
-  --bg:#0c0c0e;--panel:#141416;--panel2:#1a1a1d;--line:#29292d;
-  --text:#f5f2e9;--muted:#929196;--gold:#d7b36a;--gold2:#f2d397;
-  --danger:#e86b73;--green:#69c796;--safeBottom:max(14px,env(safe-area-inset-bottom));
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
-body{overscroll-behavior:none}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:78px}
-.top{position:sticky;top:0;z-index:10;background:rgba(12,12,14,.91);backdrop-filter:blur(18px);padding:13px 15px 10px;border-bottom:1px solid rgba(255,255,255,.04)}
-.brandrow{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.brand{font-size:21px;font-weight:950;letter-spacing:.12em}
-.brand span{color:var(--gold)}
-.userchip{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
-.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,#5d4930,#d7b36a);display:grid;place-items:center;color:#16120c;font-weight:900}
-.searchbar{display:flex;gap:8px;margin-top:11px}
-.search{flex:1;background:#161619;border:1px solid #242429;color:var(--text);border-radius:12px;padding:11px 13px;outline:none}
-.iconbtn{width:42px;border:1px solid #27272c;background:#17171a;color:var(--text);border-radius:12px}
-.categories{display:flex;gap:7px;overflow:auto;padding:12px 15px 3px;scrollbar-width:none}
-.categories::-webkit-scrollbar{display:none}
-.chip{white-space:nowrap;border:1px solid #29292e;background:#151518;color:var(--muted);border-radius:999px;padding:8px 11px;font-size:12px;font-weight:750}
-.chip.active{background:var(--text);color:#111;border-color:transparent}
-.hero{margin:13px 15px 18px;min-height:210px;border-radius:23px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:
-radial-gradient(circle at 78% 20%,rgba(215,179,106,.24),transparent 32%),
-linear-gradient(145deg,#1e1b18,#111113);border:1px solid #27231e}
-.hero:after{content:"精品";position:absolute;right:15px;top:10px;font-size:68px;font-weight:950;color:rgba(255,255,255,.03)}
-.kicker{font-size:10px;letter-spacing:.16em;color:var(--gold2);font-weight:900;text-transform:uppercase}
-.hero h1{font-size:29px;line-height:1.05;margin:7px 0 8px;max-width:430px}
-.hero p{font-size:12px;color:var(--muted);line-height:1.5;margin:0;max-width:430px}
-.sectionhead{display:flex;justify-content:space-between;align-items:end;padding:0 15px;margin:20px 0 11px}
-.sectionhead h2{font-size:17px;margin:0}.sectionhead span{font-size:11px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 15px}
-.card{background:var(--panel);border:1px solid #222226;border-radius:17px;overflow:hidden;min-width:0}
-.pic{aspect-ratio:1/1;position:relative;display:grid;place-items:center;overflow:hidden}
-.pic img{width:100%;height:100%;object-fit:cover}
-.mock{width:72%;height:55%;border-radius:18px;background:linear-gradient(145deg,#3a3b3f,#121215);box-shadow:0 20px 45px rgba(0,0,0,.35);position:relative}
-.mock:after{content:"JIN";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);letter-spacing:.18em;font-size:12px;color:rgba(255,255,255,.5);font-weight:900}
-.tone-sand{background:linear-gradient(145deg,#9b8669,#3b3024)}
-.tone-silver{background:linear-gradient(145deg,#b9bcc0,#42444a)}
-.tone-ink{background:linear-gradient(145deg,#30333a,#08090b)}
-.tone-cream{background:linear-gradient(145deg,#dccfb6,#6d5b43)}
-.tone-olive{background:linear-gradient(145deg,#727158,#25261f)}
-.badge{position:absolute;top:9px;left:9px;background:rgba(11,11,13,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);padding:5px 7px;border-radius:8px;font-size:9px;font-weight:900}
-.cardbody{padding:11px}
-.title{font-size:13px;font-weight:850;line-height:1.25}
-.subtitle{font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.price{margin-top:10px;display:flex;align-items:center;gap:6px}
-.price b{font-size:14px}.old{font-size:10px;color:#68686d;text-decoration:line-through}
-.cardactions{display:flex;gap:6px;margin-top:9px}
-.btn{border:1px solid #2a2a2f;background:#1a1a1e;color:var(--text);border-radius:10px;padding:9px 10px;font-weight:800}
-.btn.primary{background:var(--gold);color:#17120b;border-color:transparent}
-.cardactions .btn{flex:1;font-size:10px;padding:8px}
-.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:20;width:min(720px,100%);height:68px;padding-bottom:env(safe-area-inset-bottom);display:grid;grid-template-columns:repeat(4,1fr);background:rgba(13,13,15,.95);backdrop-filter:blur(18px);border-top:1px solid #242429}
-.bottom button{border:0;background:transparent;color:#77767b;font-size:10px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-.bottom i{font-style:normal;font-size:18px}
-.bottom button.active{color:var(--gold2)}
-.page{padding:16px 15px}
-.pagehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.pagehead h1{font-size:24px;margin:0}.pagehead span{font-size:11px;color:var(--muted)}
-.cartitem{display:grid;grid-template-columns:68px 1fr auto;gap:11px;background:var(--panel);border:1px solid #232327;border-radius:14px;padding:10px;margin-bottom:8px}
-.cartpic{width:68px;height:68px;border-radius:11px;background:linear-gradient(145deg,#333,#111);display:grid;place-items:center;font-size:9px;color:#aaa}
-.cartmeta b{font-size:12px}.cartmeta div{font-size:10px;color:var(--muted);margin-top:5px}
-.qty{display:flex;gap:5px;align-items:center;margin-top:8px}.qty button{width:26px;height:26px;padding:0;border:1px solid #2d2d32;background:#1c1c20;color:#fff;border-radius:7px}.qty span{font-size:11px;min-width:16px;text-align:center}
-.remove{border:0;background:transparent;color:#8a6970;font-size:16px}
-.totalbox{background:#171719;border:1px solid #27272b;border-radius:15px;padding:14px;margin-top:14px}
-.totalrow{display:flex;justify-content:space-between;font-size:12px;margin:7px 0}.totalrow.big{font-size:17px;font-weight:900;border-top:1px solid #29292e;padding-top:11px;margin-top:11px}
-.field{margin:11px 0}.field label{display:block;color:#aaa9ad;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.field input,.field select,.field textarea{width:100%;border:1px solid #29292e;background:#151518;color:var(--text);border-radius:11px;padding:11px;outline:none}
-.field textarea{resize:vertical;min-height:80px}
-.shipping{display:grid;gap:7px}.ship{border:1px solid #29292e;background:#151518;border-radius:12px;padding:11px;display:flex;justify-content:space-between;gap:10px}.ship.active{border-color:var(--gold);background:#1c1913}.ship b{font-size:12px}.ship small{display:block;color:var(--muted);margin-top:3px}
-.order{background:var(--panel);border:1px solid #242429;border-radius:14px;padding:12px;margin-bottom:8px}.orderhead{display:flex;justify-content:space-between;gap:10px}.orderhead b{font-size:12px}.status{font-size:9px;border-radius:999px;padding:5px 7px;background:#25262a;color:#aaa}.status.paid,.status.processing{color:#8fdbae;background:#14251c}.status.shipped{color:#8ebcff;background:#172133}.status.delivered{color:#17120b;background:var(--gold)}
-.orderitems{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5}
-.empty{text-align:center;padding:50px 20px;color:var(--muted)}.empty b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
-.sheetback{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.67);display:flex;align-items:flex-end;justify-content:center}
-.sheet{width:min(720px,100%);max-height:90vh;overflow:auto;background:#131315;border-radius:24px 24px 0 0;border:1px solid #29292d;padding:12px 16px calc(18px + env(safe-area-inset-bottom))}
-.handle{width:42px;height:4px;border-radius:999px;background:#3a3a3f;margin:0 auto 14px}
-.producthero{height:260px;border-radius:18px;background:linear-gradient(145deg,#252529,#0e0e10);display:grid;place-items:center;overflow:hidden}
-.producthero img{width:100%;height:100%;object-fit:cover}
-.producthero .mock{width:45%;height:55%}
-.sheet h2{font-size:23px;margin:15px 0 4px}.sheet .desc{color:var(--muted);font-size:12px;line-height:1.55}
-.specs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.spec{border:1px solid #29292e;border-radius:9px;padding:7px 8px;font-size:10px;color:#bdbcc0}
-.adminstats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.stat{background:var(--panel);border:1px solid #242429;border-radius:13px;padding:12px}.stat small{color:var(--muted);font-size:9px}.stat b{display:block;margin-top:5px;font-size:20px}
-.adminrow{background:var(--panel);border:1px solid #242429;border-radius:13px;padding:11px;margin-bottom:7px}.adminrow b{font-size:11px}.adminrow .sub{font-size:9px;color:var(--muted);margin-top:4px}.adminactions{display:flex;gap:6px;margin-top:8px}.adminactions select,.adminactions input{min-width:0;flex:1;background:#17171a;border:1px solid #2a2a2e;color:#fff;border-radius:8px;padding:8px;font-size:9px}.adminactions button{font-size:9px}
-.notice{background:#1b1914;border:1px solid #3f3522;color:#d8c69e;border-radius:11px;padding:10px 11px;font-size:10px;line-height:1.45;margin-bottom:12px}
-.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:80;background:#ede5d5;color:#16120d;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:800;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%)}
-@media(min-width:560px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero h1{font-size:34px}}
+  *{box-sizing:border-box}
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080b10;color:#fff;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  canvas{display:block}
+  #ui{position:fixed;inset:0;pointer-events:none;z-index:10}
+  #top{position:absolute;top:18px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center}
+  .chip{background:rgba(13,18,27,.78);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);border-radius:14px;padding:9px 12px;font-size:12px;font-weight:800}
+  #healthWrap{position:absolute;left:22px;bottom:28px;width:220px}
+  #healthText{font-size:13px;font-weight:900;margin-bottom:7px;text-shadow:0 2px 8px #000}
+  #healthBar{height:14px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+  #healthFill{height:100%;width:100%;background:linear-gradient(90deg,#35e28a,#a7f36f);transition:.15s}
+  #ammo{position:absolute;right:24px;bottom:24px;text-align:right;text-shadow:0 3px 12px #000}
+  #ammo b{font-size:42px;letter-spacing:-2px} #ammo span{color:#aab5c7;font-weight:800}
+  #cross{position:absolute;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%)}
+  #cross:before,#cross:after{content:"";position:absolute;background:#fff;box-shadow:0 0 8px #000}
+  #cross:before{width:2px;height:20px;left:9px;top:0}
+  #cross:after{height:2px;width:20px;left:0;top:9px}
+  #hit{position:absolute;left:50%;top:50%;width:34px;height:34px;transform:translate(-50%,-50%) rotate(45deg);opacity:0}
+  #hit:before,#hit:after{content:"";position:absolute;background:#ff5e6e}
+  #hit:before{width:3px;height:34px;left:15px}
+  #hit:after{height:3px;width:34px;top:15px}
+  #damageVignette{position:absolute;inset:0;background:radial-gradient(circle,transparent 46%,rgba(255,0,45,.5));opacity:0;transition:.15s}
+  #killfeed{position:absolute;right:20px;top:72px;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+  .kill{background:rgba(10,14,20,.75);border:1px solid rgba(255,255,255,.1);padding:7px 10px;border-radius:10px;font-size:12px}
+  #death{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(5,7,10,.48);backdrop-filter:blur(3px);font-size:36px;font-weight:1000;text-align:center}
+  #score{position:absolute;left:50%;top:70px;transform:translateX(-50%);width:min(520px,calc(100% - 24px));background:rgba(8,12,18,.92);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px;display:none;pointer-events:none}
+  #score h3{margin:0 0 10px;font-size:16px}
+  .scoreRow{display:grid;grid-template-columns:1fr 60px 60px;gap:8px;padding:7px 5px;border-top:1px solid rgba(255,255,255,.08);font-size:12px}
+  .scoreRow.head{color:#7f8ca0;font-weight:800;border:0}
+  #start{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:
+    radial-gradient(circle at 50% 15%,rgba(66,153,225,.18),transparent 30%),
+    linear-gradient(180deg,#0d1521,#080b10)}
+  .panel{width:min(470px,calc(100% - 30px));background:rgba(18,26,39,.9);border:1px solid #29384e;border-radius:26px;padding:24px;box-shadow:0 30px 100px #0008}
+  .logo{font-size:40px;font-weight:1000;letter-spacing:-2.3px}.logo span{color:#5dc7ff}
+  .subtitle{color:#93a4ba;font-size:13px;line-height:1.5;margin:5px 0 20px}
+  input{width:100%;border:1px solid #314158;background:#0b111b;color:#fff;border-radius:14px;padding:13px 14px;outline:none;font:inherit}
+  input:focus{border-color:#5dc7ff}
+  #play{width:100%;border:0;background:linear-gradient(135deg,#57bfff,#3174ff);color:#fff;border-radius:15px;padding:14px;margin-top:10px;font-weight:1000;font-size:15px;cursor:pointer}
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:17px}
+  .control{border:1px solid #29384b;background:#111a28;border-radius:13px;padding:9px 10px;color:#9eacc0;font-size:11px}
+  .control b{display:block;color:#fff;font-size:12px;margin-bottom:2px}
+  #status{margin-top:12px;color:#ffcf66;font-size:11px}
+  #minimap{position:absolute;left:20px;top:18px;width:120px;height:120px;border-radius:16px;background:rgba(9,13,20,.74);border:1px solid rgba(255,255,255,.12);overflow:hidden}
+  #mapCanvas{width:100%;height:100%}
+  @media(max-width:650px){#minimap{display:none}.controls{grid-template-columns:1fr}.logo{font-size:32px}}
 </style>
 </head>
 <body>
-<div class="app">
-  <header class="top">
-    <div class="brandrow">
-      <div class="brand">J<span>I</span>N</div>
-      <div class="userchip"><span id="hello">Telegram</span><div class="avatar" id="avatar">T</div></div>
+<div id="start">
+  <div class="panel">
+    <div class="logo">STRIKE<span>POINT</span></div>
+    <div class="subtitle">Браузерный 3D online FPS. Зайди с двух вкладок или устройств в одну и ту же ссылку — игроки увидят друг друга.</div>
+    <input id="name" maxlength="16" placeholder="Твой ник" value="Player">
+    <button id="play">ИГРАТЬ</button>
+    <div class="controls">
+      <div class="control"><b>WASD</b>Передвижение</div>
+      <div class="control"><b>Мышь</b>Осмотр / огонь</div>
+      <div class="control"><b>Shift</b>Спринт</div>
+      <div class="control"><b>R / TAB</b>Перезарядка / таблица</div>
     </div>
-    <div class="searchbar">
-      <input id="search" class="search" placeholder="Поиск по каталогу…" oninput="loadProducts()">
-      <button class="iconbtn" onclick="focusCart()">🛍</button>
-    </div>
-  </header>
-
-  <main>
-    <section id="shopPage">
-      <div class="categories" id="categories"></div>
-      <div class="hero">
-        <div class="kicker">Curated in China · shipped to you</div>
-        <h1>Новая Азия без случайного маркетплейса.</h1>
-        <p>Отбираем оригинальные товары независимых брендов и производителей: техника, предметы для дома, аксессуары и travel.</p>
-      </div>
-      <div class="sectionhead"><h2>Подборка</h2><span id="resultCount">0 товаров</span></div>
-      <div id="productGrid" class="grid"></div>
-    </section>
-
-    <section id="cartPage" class="page hidden">
-      <div class="pagehead"><h1>Корзина</h1><span id="cartCount">0 товаров</span></div>
-      <div id="cartItems"></div>
-      <div id="cartSummary"></div>
-    </section>
-
-    <section id="ordersPage" class="page hidden">
-      <div class="pagehead"><h1>Заказы</h1><span>История</span></div>
-      <div id="ordersList"></div>
-    </section>
-
-    <section id="profilePage" class="page hidden">
-      <div class="pagehead"><h1>Профиль</h1><span id="adminBadge"></span></div>
-      <div class="totalbox">
-        <div class="totalrow"><span>Telegram</span><b id="profileUser">@user</b></div>
-        <div class="totalrow"><span>ID</span><b id="profileId">—</b></div>
-        <div class="totalrow"><span>Оплата</span><b id="paymentState">—</b></div>
-      </div>
-      <div style="height:12px"></div>
-      <button id="adminOpen" class="btn primary hidden" style="width:100%" onclick="showAdmin()">Операционное управление</button>
-    </section>
-
-    <section id="adminPage" class="page hidden">
-      <div class="pagehead"><h1>Operations</h1><button class="btn" onclick="showPage('profile')">Назад</button></div>
-      <div class="notice">Админка доступна только Telegram ID из переменной <b>ADMIN_TELEGRAM_IDS</b>.</div>
-      <div id="adminStats" class="adminstats"></div>
-      <div class="sectionhead" style="padding:0;margin-top:20px"><h2>Заказы</h2><span>управление статусами</span></div>
-      <div id="adminOrders"></div>
-      <div class="sectionhead" style="padding:0;margin-top:20px"><h2>Добавить товар</h2><span>каталог</span></div>
-      <div class="field"><label>Название</label><input id="aTitle"></div>
-      <div class="field"><label>Подзаголовок</label><input id="aSubtitle"></div>
-      <div class="field"><label>Категория</label><input id="aCategory" placeholder="Tech"></div>
-      <div class="field"><label>Цена в центах</label><input id="aPrice" type="number" placeholder="12900"></div>
-      <div class="field"><label>Остаток</label><input id="aStock" type="number" placeholder="10"></div>
-      <div class="field"><label>URL изображения</label><input id="aImage" placeholder="https://..."></div>
-      <div class="field"><label>Описание</label><textarea id="aDescription"></textarea></div>
-      <button class="btn primary" style="width:100%" onclick="adminAddProduct()">Добавить товар</button>
-    </section>
-  </main>
-</div>
-
-<nav class="bottom" id="bottomNav">
-  <button class="active" data-page="shop" onclick="showPage('shop')"><i>⌂</i>Каталог</button>
-  <button data-page="cart" onclick="showPage('cart')"><i>🛍</i>Корзина</button>
-  <button data-page="orders" onclick="showPage('orders')"><i>▤</i>Заказы</button>
-  <button data-page="profile" onclick="showPage('profile')"><i>◎</i>Профиль</button>
-</nav>
-
-<div id="productSheet" class="sheetback hidden" onclick="if(event.target===this)closeProduct()">
-  <div class="sheet">
-    <div class="handle"></div>
-    <div id="sheetContent"></div>
+    <div id="status">Подключение к серверу...</div>
   </div>
 </div>
 
-<div id="checkoutSheet" class="sheetback hidden" onclick="if(event.target===this)closeCheckout()">
-  <div class="sheet">
-    <div class="handle"></div>
-    <h2 style="margin-top:0">Оформление</h2>
-    <div class="field"><label>Имя получателя</label><input id="cName"></div>
-    <div class="field"><label>Телефон</label><input id="cPhone" inputmode="tel"></div>
-    <div class="field"><label>Страна</label><input id="cCountry" placeholder="Lithuania"></div>
-    <div class="field"><label>Город</label><input id="cCity"></div>
-    <div class="field"><label>Адрес</label><input id="cAddress"></div>
-    <div class="field"><label>Индекс</label><input id="cPostal"></div>
-    <div class="field"><label>Доставка</label><div id="shippingOptions" class="shipping"></div></div>
-    <div id="checkoutTotal" class="totalbox"></div>
-    <button class="btn primary" style="width:100%;margin-top:12px;padding:13px" onclick="checkout()">Перейти к оплате</button>
-  </div>
+<div id="ui">
+  <div id="minimap"><canvas id="mapCanvas" width="240" height="240"></canvas></div>
+  <div id="top"><div class="chip">ONLINE: <span id="online">1</span></div><div class="chip">K/D: <span id="kd">0 / 0</span></div></div>
+  <div id="cross"></div><div id="hit"></div><div id="damageVignette"></div>
+  <div id="healthWrap"><div id="healthText">100 HP</div><div id="healthBar"><div id="healthFill"></div></div></div>
+  <div id="ammo"><b id="ammoNow">30</b> <span>/ <span id="ammoReserve">120</span></span><div style="font-size:11px;color:#738095;font-weight:900">AR-7</div></div>
+  <div id="killfeed"></div>
+  <div id="death">ТЫ УБИТ<br><span style="font-size:14px;color:#c7d1df">Респавн через 3 секунды</span></div>
+  <div id="score"><h3>ТАБЛИЦА ИГРОКОВ</h3><div class="scoreRow head"><div>Игрок</div><div>K</div><div>D</div></div><div id="scoreRows"></div></div>
 </div>
 
-<div id="toast" class="toast"></div>
-
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.min.js"></script>
 <script>
-const tg = window.Telegram?.WebApp;
-if(tg){
-  tg.ready();
-  tg.expand();
-  try{tg.setHeaderColor("#0c0c0e");tg.setBackgroundColor("#0c0c0e")}catch{}
+(() => {
+const socket = io();
+const statusEl = document.getElementById('status');
+socket.on('connect', ()=> statusEl.textContent='Сервер подключен. Можно играть.');
+socket.on('disconnect', ()=> statusEl.textContent='Связь с сервером потеряна.');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x8fb0c8);
+scene.fog = new THREE.Fog(0x8fb0c8, 32, 78);
+
+const camera = new THREE.PerspectiveCamera(76, innerWidth/innerHeight, .05, 120);
+camera.position.set(0,1.7,0);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+
+const hemi = new THREE.HemisphereLight(0xd9efff,0x33405a,2.1); scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xffffff,2.4); sun.position.set(15,28,10); sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048); sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;scene.add(sun);
+
+function meshBox(x,y,z,sx,sy,sz,color=0x53647b){
+  const m=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),new THREE.MeshStandardMaterial({color,roughness:.9,metalness:.05}));
+  m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;scene.add(m);return m;
+}
+const ground=meshBox(0,-.25,0,52,.5,52,0x43515f);
+const collisionBoxes=[];
+function wall(x,y,z,sx,sy,sz,color){
+  const m=meshBox(x,y,z,sx,sy,sz,color); collisionBoxes.push(new THREE.Box3().setFromObject(m)); return m;
+}
+// perimeter
+wall(0,2,-26,52,4,1,0x344150);wall(0,2,26,52,4,1,0x344150);wall(-26,2,0,1,4,52,0x344150);wall(26,2,0,1,4,52,0x344150);
+// cover / buildings
+[
+ [-10,1.5,-7,8,3,5,0x65778c],[9,2,-9,6,4,8,0x53647a],[12,1.4,8,9,2.8,4,0x6b5f56],
+ [-11,2,10,5,4,9,0x4b596c],[0,1.25,0,4,2.5,4,0x5c6b7c],[0,1.1,14,9,2.2,3,0x6b7582],
+ [0,1.1,-17,10,2.2,3,0x45576c],[-19,1,0,3,2,9,0x66717d],[19,1,0,3,2,9,0x66717d]
+].forEach(a=>wall(...a));
+// decorative crates
+for(let i=0;i<13;i++){
+ const x=(Math.random()*40-20),z=(Math.random()*40-20);
+ if(Math.abs(x)<5&&Math.abs(z)<5) continue;
+ const m=meshBox(x,.55,z,1.4,1.1,1.4,0x755b3f); collisionBoxes.push(new THREE.Box3().setFromObject(m));
 }
 
-let config=null, products=[], category="All", cart=JSON.parse(localStorage.getItem("jin-cart")||"[]"), selectedProduct=null, selectedShipping="standard";
+// weapon
+const gun=new THREE.Group();camera.add(gun);scene.add(camera);
+const gunMat=new THREE.MeshStandardMaterial({color:0x202b38,metalness:.6,roughness:.35});
+const accentMat=new THREE.MeshStandardMaterial({color:0x3b92ff,metalness:.35,roughness:.4});
+const body=new THREE.Mesh(new THREE.BoxGeometry(.24,.18,.7),gunMat);body.position.set(.26,-.25,-.55);gun.add(body);
+const barrel=new THREE.Mesh(new THREE.BoxGeometry(.07,.07,.48),gunMat);barrel.position.set(.25,-.22,-1.05);gun.add(barrel);
+const accent=new THREE.Mesh(new THREE.BoxGeometry(.08,.1,.34),accentMat);accent.position.set(.19,-.20,-.55);gun.add(accent);
+gun.position.set(.12,-.03,0);
 
-function initData(){ return tg?.initData || ""; }
-async function api(url,opt={}){
-  opt.headers=Object.assign({},opt.headers||{},{"x-telegram-init-data":initData()});
-  const r=await fetch(url,opt);
-  let d={};try{d=await r.json()}catch{}
-  if(!r.ok)throw new Error(d.details||d.error||"Ошибка");
-  return d;
-}
-function money(cents){
-  const cur=config?.currency||"EUR";
-  try{return new Intl.NumberFormat("ru-RU",{style:"currency",currency:cur,maximumFractionDigits:2}).format(cents/100)}
-  catch{return (cents/100).toFixed(2)+" "+cur}
-}
-function toast(t){
-  const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");
-  clearTimeout(window.__t);window.__t=setTimeout(()=>e.classList.remove("show"),1500);
-}
-function saveCart(){localStorage.setItem("jin-cart",JSON.stringify(cart));renderCart();}
+const players = new Map();
+let myId=null, joined=false, alive=true, hp=100, kills=0, deaths=0;
+let ammo=30,reserve=120,reloading=false;
+let yaw=0,pitch=0;
+const velocity=new THREE.Vector3(),keys={};
 
-async function boot(){
-  try{
-    config=await api("/api/config");
-    const u=config.user;
-    document.getElementById("hello").textContent=u.first_name||u.username||"Telegram";
-    document.getElementById("avatar").textContent=(u.first_name||u.username||"T").slice(0,1).toUpperCase();
-    document.getElementById("profileUser").textContent="@"+(u.username||"telegram_user");
-    document.getElementById("profileId").textContent=u.id;
-    document.getElementById("paymentState").textContent=config.paymentsReady?"Подключена":"Demo / не подключена";
-    if(config.isAdmin){
-      document.getElementById("adminBadge").textContent="ADMIN";
-      document.getElementById("adminOpen").classList.remove("hidden");
-    }
-    renderCategories();
-    await loadProducts();
-    renderCart();
-  }catch(e){
-    document.body.innerHTML=`<div class="empty" style="padding-top:100px"><b>Откройте магазин из Telegram</b>${e.message}</div>`;
-  }
+function makeRemote(p){
+ const g=new THREE.Group();
+ const mat=new THREE.MeshStandardMaterial({color:0x2f75ff,roughness:.65});
+ const body=new THREE.Mesh(new THREE.CapsuleGeometry(.42,.9,6,10),mat);body.position.y=1.05;body.castShadow=true;g.add(body);
+ const head=new THREE.Mesh(new THREE.SphereGeometry(.28,16,12),new THREE.MeshStandardMaterial({color:0xe1b497,roughness:.8}));head.position.y=1.88;head.castShadow=true;g.add(head);
+ const gunR=new THREE.Mesh(new THREE.BoxGeometry(.12,.1,.75),gunMat);gunR.position.set(.36,1.25,-.34);g.add(gunR);
+ g.position.set(p.x,0,p.z);g.rotation.y=p.yaw||0;scene.add(g);
+ g.userData={id:p.id,hp:p.hp,targetPos:new THREE.Vector3(p.x,0,p.z),targetYaw:p.yaw||0};
+ return g;
 }
+function syncRemote(p){
+ if(p.id===myId)return;
+ let g=players.get(p.id);
+ if(!g){g=makeRemote(p);players.set(p.id,g);}
+ g.userData.targetPos.set(p.x,0,p.z);g.userData.targetYaw=p.yaw||0;g.visible=p.alive!==false;g.userData.hp=p.hp;
+}
+socket.on('joined',data=>{
+ myId=data.self.id;camera.position.set(data.self.x,data.self.y,data.self.z);
+ data.players.forEach(syncRemote);joined=true;
+});
+socket.on('playerJoined',p=>syncRemote(p));
+socket.on('playerState',p=>syncRemote(p));
+socket.on('playerRespawned',p=>syncRemote(p));
+socket.on('playerLeft',id=>{const g=players.get(id);if(g){scene.remove(g);players.delete(id);}});
+socket.on('scoreboard',list=>{
+ document.getElementById('online').textContent=list.length;
+ const me=list.find(p=>p.id===myId);if(me){kills=me.kills;deaths=me.deaths;document.getElementById('kd').textContent=kills+' / '+deaths;}
+ document.getElementById('scoreRows').innerHTML=list.sort((a,b)=>b.kills-a.kills).map(p=>`<div class="scoreRow"><div>${esc(p.name)}${p.id===myId?' <span style="color:#62c7ff">(ты)</span>':''}</div><div>${p.kills}</div><div>${p.deaths}</div></div>`).join('');
+});
+socket.on('killfeed',e=>{
+ const d=document.createElement('div');d.className='kill';d.innerHTML=`<b>${esc(e.killer)}</b> → ${esc(e.victim)}`;
+ document.getElementById('killfeed').prepend(d);setTimeout(()=>d.remove(),4500);
+});
+socket.on('damage',d=>{
+ hp=d.hp;updateHP();const v=document.getElementById('damageVignette');v.style.opacity='1';setTimeout(()=>v.style.opacity='0',130);
+});
+socket.on('died',d=>{alive=false;deaths++;document.getElementById('death').style.display='flex';});
+socket.on('respawn',p=>{alive=true;hp=100;ammo=30;camera.position.set(p.x,p.y,p.z);velocity.set(0,0,0);document.getElementById('death').style.display='none';updateHP();updateAmmo();});
 
-function renderCategories(){
-  const cats=["All","Tech","Audio","Home","Bags","Travel"];
-  document.getElementById("categories").innerHTML=cats.map(c=>`<button class="chip ${category===c?"active":""}" onclick="setCategory('${c}')">${c==="All"?"Все":c}</button>`).join("");
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function updateHP(){document.getElementById('healthText').textContent=Math.ceil(hp)+' HP';document.getElementById('healthFill').style.width=hp+'%';}
+function updateAmmo(){document.getElementById('ammoNow').textContent=ammo;document.getElementById('ammoReserve').textContent=reserve;}
+function reload(){
+ if(reloading||ammo===30||reserve<=0||!alive)return;
+ reloading=true;setTimeout(()=>{const need=30-ammo,take=Math.min(need,reserve);ammo+=take;reserve-=take;reloading=false;updateAmmo();},1150);
 }
-function setCategory(c){category=c;renderCategories();loadProducts();}
-async function loadProducts(){
-  const q=document.getElementById("search")?.value||"";
-  const d=await api(`/api/products?q=${encodeURIComponent(q)}&category=${encodeURIComponent(category)}`);
-  products=d.products;
-  document.getElementById("resultCount").textContent=products.length+" товаров";
-  document.getElementById("productGrid").innerHTML=products.length?products.map(cardHtml).join(""):`<div class="empty" style="grid-column:1/-1"><b>Ничего не найдено</b>Попробуйте другой запрос.</div>`;
-}
-function imageHtml(p,cls="pic"){
-  if(p.image)return `<div class="${cls}"><img src="${p.image}" alt=""></div>`;
-  return `<div class="${cls} tone-${p.tone||"ink"}"><div class="mock"></div></div>`;
-}
-function cardHtml(p){
-  return `<article class="card">
-    <div class="pic tone-${p.tone||"ink"}">${p.image?`<img src="${p.image}" alt="">`:`<div class="mock"></div>`}${p.badge?`<span class="badge">${p.badge}</span>`:""}</div>
-    <div class="cardbody">
-      <div class="title">${esc(p.title)}</div><div class="subtitle">${esc(p.subtitle)}</div>
-      <div class="price"><b>${money(p.price)}</b>${p.oldPrice?`<span class="old">${money(p.oldPrice)}</span>`:""}</div>
-      <div class="cardactions"><button class="btn" onclick="openProduct('${p.id}')">Подробнее</button><button class="btn primary" onclick="addToCart('${p.id}')">＋</button></div>
-    </div>
-  </article>`;
-}
-function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+document.getElementById('play').onclick=()=>{
+ const name=document.getElementById('name').value.trim()||'Player';
+ socket.emit('join',{name});
+ document.getElementById('start').style.display='none';
+ renderer.domElement.requestPointerLock();
+};
 
-function openProduct(id){
-  selectedProduct=products.find(p=>p.id===id);
-  if(!selectedProduct)return;
-  const p=selectedProduct;
-  document.getElementById("sheetContent").innerHTML=`
-    <div class="producthero tone-${p.tone||"ink"}">${p.image?`<img src="${p.image}">`:`<div class="mock"></div>`}</div>
-    <div class="kicker" style="margin-top:14px">${esc(p.category)} · ${p.stock} in stock</div>
-    <h2>${esc(p.title)}</h2><div class="subtitle" style="font-size:12px">${esc(p.subtitle)}</div>
-    <div class="price" style="margin-top:13px"><b style="font-size:20px">${money(p.price)}</b>${p.oldPrice?`<span class="old">${money(p.oldPrice)}</span>`:""}</div>
-    <p class="desc">${esc(p.description)}</p>
-    <div class="specs">${(p.specs||[]).map(x=>`<span class="spec">${esc(x)}</span>`).join("")}</div>
-    <button class="btn primary" style="width:100%;padding:13px" onclick="addToCart('${p.id}');closeProduct()">Добавить в корзину · ${money(p.price)}</button>`;
-  document.getElementById("productSheet").classList.remove("hidden");
-}
-function closeProduct(){document.getElementById("productSheet").classList.add("hidden")}
-function addToCart(id){
-  const p=products.find(x=>x.id===id);
-  if(!p)return;
-  const found=cart.find(x=>x.productId===id);
-  if(found)found.qty=Math.min(10,found.qty+1);else cart.push({productId:id,qty:1});
-  saveCart();toast("Добавлено в корзину");
-  try{tg?.HapticFeedback?.impactOccurred("light")}catch{}
-}
-function changeQty(id,d){
-  const x=cart.find(i=>i.productId===id);if(!x)return;
-  x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.productId!==id);
-  saveCart();
-}
-function cartProducts(){
-  return cart.map(i=>({item:i,p:products.find(p=>p.id===i.productId)})).filter(x=>x.p);
-}
-function renderCart(){
-  const arr=cartProducts(), count=arr.reduce((n,x)=>n+x.item.qty,0);
-  document.getElementById("cartCount").textContent=count+" товаров";
-  const list=document.getElementById("cartItems");
-  if(!arr.length){
-    list.innerHTML='<div class="empty"><b>Корзина пуста</b>Добавьте что-нибудь из каталога.</div>';
-    document.getElementById("cartSummary").innerHTML="";
-    return;
-  }
-  list.innerHTML=arr.map(({item,p})=>`<div class="cartitem">
-    <div class="cartpic tone-${p.tone||"ink"}">JIN</div>
-    <div class="cartmeta"><b>${esc(p.title)}</b><div>${money(p.price)}</div><div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><span>${item.qty}</span><button onclick="changeQty('${p.id}',1)">＋</button></div></div>
-    <button class="remove" onclick="changeQty('${p.id}',-${item.qty})">×</button>
-  </div>`).join("");
-  const subtotal=arr.reduce((n,x)=>n+x.p.price*x.item.qty,0);
-  document.getElementById("cartSummary").innerHTML=`<div class="totalbox"><div class="totalrow"><span>Товары</span><b>${money(subtotal)}</b></div><div class="totalrow"><span>Доставка</span><span class="muted">на следующем шаге</span></div></div><button class="btn primary" style="width:100%;margin-top:10px;padding:13px" onclick="openCheckout()">Оформить заказ</button>`;
-}
-function focusCart(){showPage("cart")}
+addEventListener('keydown',e=>{
+ keys[e.code]=true;
+ if(e.code==='KeyR')reload();
+ if(e.code==='Tab'){e.preventDefault();document.getElementById('score').style.display='block';}
+});
+addEventListener('keyup',e=>{
+ keys[e.code]=false;
+ if(e.code==='Tab')document.getElementById('score').style.display='none';
+});
+addEventListener('mousemove',e=>{
+ if(document.pointerLockElement!==renderer.domElement||!alive)return;
+ yaw-=e.movementX*.0022;pitch-=e.movementY*.0020;pitch=Math.max(-1.45,Math.min(1.45,pitch));
+ camera.rotation.order='YXZ';camera.rotation.y=yaw;camera.rotation.x=pitch;
+});
+renderer.domElement.addEventListener('click',()=>{if(document.pointerLockElement!==renderer.domElement&&joined)renderer.domElement.requestPointerLock();});
+addEventListener('mousedown',e=>{if(e.button===0&&document.pointerLockElement===renderer.domElement)shoot();});
 
-function openCheckout(){
-  if(!cart.length)return;
-  const u=config.user;
-  document.getElementById("cName").value=[u.first_name,u.last_name].filter(Boolean).join(" ");
-  renderShipping();
-  document.getElementById("checkoutSheet").classList.remove("hidden");
-}
-function closeCheckout(){document.getElementById("checkoutSheet").classList.add("hidden")}
-function renderShipping(){
-  document.getElementById("shippingOptions").innerHTML=config.shippingMethods.map(s=>`<button class="ship ${selectedShipping===s.id?"active":""}" onclick="selectedShipping='${s.id}';renderShipping()"><span><b>${s.title}</b><small>${s.subtitle}</small></span><b>${money(s.price)}</b></button>`).join("");
-  const subtotal=cartProducts().reduce((n,x)=>n+x.p.price*x.item.qty,0);
-  const ship=config.shippingMethods.find(s=>s.id===selectedShipping);
-  document.getElementById("checkoutTotal").innerHTML=`<div class="totalrow"><span>Товары</span><b>${money(subtotal)}</b></div><div class="totalrow"><span>Доставка</span><b>${money(ship.price)}</b></div><div class="totalrow big"><span>Итого</span><b>${money(subtotal+ship.price)}</b></div>`;
-}
-async function checkout(){
-  const payload={
-    items:cart,
-    shippingMethod:selectedShipping,
-    address:{
-      name:document.getElementById("cName").value.trim(),
-      phone:document.getElementById("cPhone").value.trim(),
-      country:document.getElementById("cCountry").value.trim(),
-      city:document.getElementById("cCity").value.trim(),
-      address1:document.getElementById("cAddress").value.trim(),
-      postalCode:document.getElementById("cPostal").value.trim()
-    }
-  };
-  try{
-    const d=await api("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-    if(d.invoiceUrl && tg?.openInvoice){
-      tg.openInvoice(d.invoiceUrl,status=>{
-        if(status==="paid"){
-          cart=[];saveCart();closeCheckout();toast("Оплата прошла");showPage("orders");loadOrders();
-        }else if(status==="failed")toast("Оплата не прошла");
-      });
-    }else if(d.demo){
-      toast("Demo-заказ создан · "+d.orderId);
-      closeCheckout();showPage("orders");loadOrders();
-    }else{
-      toast("Заказ создан");
-    }
-  }catch(e){toast(e.message)}
+const raycaster=new THREE.Raycaster();
+function shoot(){
+ if(!alive||reloading)return;
+ if(ammo<=0){reload();return}
+ ammo--;updateAmmo();
+ gun.position.z=.04;setTimeout(()=>gun.position.z=0,50);
+ raycaster.setFromCamera(new THREE.Vector2(0,0),camera);
+ const targets=[...players.values()].filter(g=>g.visible).flatMap(g=>g.children.map(ch=>{ch.userData.playerId=g.userData.id;return ch;}));
+ const hits=raycaster.intersectObjects(targets,false);
+ let targetId=null,headshot=false;
+ if(hits.length){
+   const h=hits[0];targetId=h.object.userData.playerId;headshot=h.point.y-(players.get(targetId)?.position.y||0)>1.55;
+   const hit=document.getElementById('hit');hit.style.opacity='1';setTimeout(()=>hit.style.opacity='0',90);
+ }
+ const dir=new THREE.Vector3();camera.getWorldDirection(dir);
+ socket.emit('shoot',{targetId,headshot,dx:dir.x,dy:dir.y,dz:dir.z});
 }
 
-async function loadOrders(){
-  const d=await api("/api/orders/mine");
-  document.getElementById("ordersList").innerHTML=d.orders.length?d.orders.map(orderHtml).join(""):'<div class="empty"><b>Заказов пока нет</b>Оформите первую покупку в каталоге.</div>';
+function playerCollides(pos){
+ const r=.34;
+ const box=new THREE.Box3(new THREE.Vector3(pos.x-r,.05,pos.z-r),new THREE.Vector3(pos.x+r,1.75,pos.z+r));
+ return collisionBoxes.some(b=>b.intersectsBox(box));
 }
-const statusNames={awaiting_payment:"Ожидает оплаты",paid:"Оплачен",processing:"Собирается",shipped:"Отправлен",delivered:"Доставлен",cancelled:"Отменён"};
-function orderHtml(o){
-  return `<div class="order"><div class="orderhead"><b>${o.id}</b><span class="status ${o.status}">${statusNames[o.status]||o.status}</span></div><div class="orderitems">${o.items.map(i=>`${esc(i.title)} ×${i.qty}`).join("<br>")}<br><b style="color:#ddd">${money(o.total)}</b>${o.tracking?`<br>Tracking: ${esc(o.tracking)}`:""}</div></div>`;
-}
+const clock=new THREE.Clock();
+let stateTimer=0;
+function animate(){
+ requestAnimationFrame(animate);
+ const dt=Math.min(clock.getDelta(),.033);
 
-function showPage(p){
-  ["shop","cart","orders","profile","admin"].forEach(x=>document.getElementById(x+"Page").classList.toggle("hidden",x!==p));
-  document.querySelectorAll(".bottom button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));
-  document.getElementById("bottomNav").classList.toggle("hidden",p==="admin");
-  if(p==="orders")loadOrders();
-  if(p==="cart")renderCart();
-}
-async function showAdmin(){showPage("admin");await loadAdmin()}
-async function loadAdmin(){
-  const [s,o]=await Promise.all([api("/api/admin/stats"),api("/api/admin/orders")]);
-  document.getElementById("adminStats").innerHTML=[
-    ["Товары",s.products],["Заказы",s.orders],["Выручка",money(s.revenue)],["Мало на складе",s.lowStock]
-  ].map(x=>`<div class="stat"><small>${x[0]}</small><b>${x[1]}</b></div>`).join("");
-  document.getElementById("adminOrders").innerHTML=o.orders.length?o.orders.map(x=>`<div class="adminrow"><b>${x.id} · ${money(x.total)}</b><div class="sub">@${esc(x.telegramUsername||"user")} · ${esc(x.customerName)} · ${statusNames[x.status]||x.status}</div><div class="adminactions"><select id="st_${x.id}">${Object.keys(statusNames).map(s=>`<option value="${s}" ${s===x.status?"selected":""}>${statusNames[s]}</option>`).join("")}</select><input id="tr_${x.id}" placeholder="Tracking" value="${esc(x.tracking||"")}"><button class="btn primary" onclick="adminSaveOrder('${x.id}')">OK</button></div></div>`).join(""):'<div class="empty">Нет заказов.</div>';
-}
-async function adminSaveOrder(id){
-  await api(`/api/admin/orders/${id}/status`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({status:document.getElementById("st_"+id).value,tracking:document.getElementById("tr_"+id).value})});
-  toast("Заказ обновлён");loadAdmin();
-}
-async function adminAddProduct(){
-  const body={
-    title:document.getElementById("aTitle").value,
-    subtitle:document.getElementById("aSubtitle").value,
-    category:document.getElementById("aCategory").value,
-    price:Number(document.getElementById("aPrice").value),
-    stock:Number(document.getElementById("aStock").value),
-    image:document.getElementById("aImage").value,
-    description:document.getElementById("aDescription").value,
-    tone:"ink"
-  };
-  await api("/api/admin/products",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-  toast("Товар добавлен");await loadProducts();
-}
+ if(joined&&alive){
+   const speed=keys.ShiftLeft?8.2:5.1;
+   const f=(keys.KeyW?1:0)-(keys.KeyS?1:0),r=(keys.KeyD?1:0)-(keys.KeyA?1:0);
+   const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
+   const right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
+   const move=forward.multiplyScalar(f).add(right.multiplyScalar(r));
+   if(move.lengthSq()>0)move.normalize().multiplyScalar(speed*dt);
+   const next=camera.position.clone();next.x+=move.x; if(!playerCollides(next))camera.position.x=next.x;
+   next.copy(camera.position);next.z+=move.z;if(!playerCollides(next))camera.position.z=next.z;
+   camera.position.x=Math.max(-24.5,Math.min(24.5,camera.position.x));
+   camera.position.z=Math.max(-24.5,Math.min(24.5,camera.position.z));
 
-boot();
+   stateTimer+=dt;
+   if(stateTimer>.05){
+     socket.emit('state',{x:camera.position.x,y:camera.position.y,z:camera.position.z,yaw,pitch});stateTimer=0;
+   }
+ }
+ for(const g of players.values()){
+   g.position.lerp(g.userData.targetPos,.22);
+   let d=g.userData.targetYaw-g.rotation.y;while(d>Math.PI)d-=Math.PI*2;while(d<-Math.PI)d+=Math.PI*2;
+   g.rotation.y+=d*.22;
+ }
+ drawMinimap();
+ renderer.render(scene,camera);
+}
+function drawMinimap(){
+ const c=document.getElementById('mapCanvas'),ctx=c.getContext('2d'),s=240;
+ ctx.clearRect(0,0,s,s);ctx.fillStyle='#0d1521';ctx.fillRect(0,0,s,s);
+ ctx.strokeStyle='#2e4057';ctx.lineWidth=2;ctx.strokeRect(10,10,s-20,s-20);
+ const conv=(v)=>(v+26)/52*(s-20)+10;
+ ctx.fillStyle='#45607b';
+ collisionBoxes.forEach(b=>{const x=conv(b.min.x),z=conv(b.min.z),w=(b.max.x-b.min.x)/52*(s-20),h=(b.max.z-b.min.z)/52*(s-20);ctx.fillRect(x,z,w,h);});
+ ctx.fillStyle='#60c7ff';ctx.beginPath();ctx.arc(conv(camera.position.x),conv(camera.position.z),5,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#ff6b78';for(const g of players.values()){if(!g.visible)continue;ctx.beginPath();ctx.arc(conv(g.position.x),conv(g.position.z),4,0,Math.PI*2);ctx.fill();}
+}
+animate();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+})();
 </script>
 </body>
 </html>
