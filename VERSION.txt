@@ -1,2 +1,2 @@
-FrogDrop v24 clean deploy
-index.html is the site entry point.
+FrogDrop v25
+Admin UI is role-gated in the static prototype.
