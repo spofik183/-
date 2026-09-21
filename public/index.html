@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b111b" />
+  <title>Skupki.net — игровые аккаунты</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="top-row shell">
+      <button class="brand" data-view="home" aria-label="Skupki.net"><span class="brand-square">S</span><span>skupki<span class="brand-dot">.net</span></span></button>
+      <div class="game-search"><span>⌕</span><input id="gameSearch" placeholder="Найти свою игру" autocomplete="off"><kbd>⌕</kbd></div>
+      <div class="head-actions">
+        <button class="balance-pill" data-view="wallet"><span>▣</span><b id="headerBalance">0 ₽</b></button>
+        <button class="head-icon" aria-label="Уведомления">♧</button>
+        <button class="avatar" data-view="profile">A</button>
+      </div>
+    </div>
+    <div class="nav-row">
+      <div class="shell nav-shell">
+        <nav class="nav-tabs">
+          <button class="tab active" data-view="home">Главная</button>
+          <button class="tab" data-view="wallet">Кошелёк</button>
+          <button class="tab" data-view="chat">Чаты <span class="badge">4</span></button>
+          <button class="tab" data-view="profile">Профиль</button>
+          <button class="tab" data-view="admin">Админ-панель</button>
+        </nav>
+        <button class="support-link">◉&nbsp; Помощь и поддержка ↗</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell main-shell">
+    <section class="view active" id="view-home">
+      <div class="home-intro">
+        <div><p class="kicker">ИГРАЙ. МЕНЯЙСЯ. ДВИГАЙСЯ ДАЛЬШЕ.</p><h1>Дай аккаунту новую жизнь<span>.</span></h1><p class="lead">Выбери игру. Узнай стоимость. Реши, как продать.</p></div>
+        <div class="accepting"><i></i> Принимаем заявки</div>
+      </div>
+
+      <section class="hero-banner">
+        <div class="hero-copy"><p>⚡ БОТ-ПОДДЕРЖКА</p><h2>Каждый шаг —<br>в одном диалоге.</h2><span>Оценка, вопросы специалисту и статус сделки.<br>Продолжай с того места, где остановился.</span><button class="white-btn" data-view="chat">Открыть чат&nbsp;&nbsp; ↗</button></div>
+        <div class="hero-visual" aria-hidden="true"><div class="big-tile">↗</div><div class="mini-chip game-over">⌘&nbsp; GAME OVER?</div><div class="mini-chip new-level">✓&nbsp; NEW LEVEL.</div></div>
+        <div class="hero-dots"><b></b><b></b><b class="long"></b></div><div class="hero-page">03 / 03</div><div class="hero-next">NEXT CHAPTER / 01</div>
+      </section>
+
+      <div class="sell-options">
+        <button class="sell-option primary-card" data-view="chat"><div class="option-icon">▣</div><div><h3>Сдать через бота <small>ПРОСТО</small></h3><p>Оценка и поддержка в одном чате</p></div><b>↗</b></button>
+        <button class="sell-option" id="directSale"><div class="option-icon dark">☷</div><div><h3>Продать самому</h3><p>Твой аккаунт — твои условия</p></div><b>↗</b></button>
+      </div>
+
+      <section class="games-section">
+        <div class="section-title"><h2>Во что ты играешь? <small>6</small></h2><span>Выбери игру для оценки</span></div>
+        <div class="chips"><button class="chip active" data-filter="all">🎮&nbsp; Все игры</button><button class="chip" data-filter="mobile">▯&nbsp; Мобильные</button><button class="chip" data-filter="pc">▣&nbsp; PC</button><button class="chip" data-filter="rpg">RPG</button></div>
+        <div class="game-grid" id="games"></div>
+        <p class="price-note">Цена зависит от характеристик аккаунта. Итоговую оценку подтвердит специалист.</p>
+      </section>
+
+      <section class="latest"><div class="section-title"><h2>Последние сделки</h2><span>Без личных данных</span></div><div class="latest-card"><div class="check-round">✓</div><div><b>Здесь появятся завершённые сделки</b><p>Публикуем только подтверждённые продажи, а имена оставляем приватными.</p></div><small>НОВОЕ НАЧАЛО</small></div></section>
+      <div class="benefits"><span>◉ Проверка перед сделкой</span><span>◯ Поддержка на каждом шаге</span><span>▣ Статус оплаты в личном кабинете</span></div>
+    </section>
+
+    <section class="view" id="view-chat">
+      <div class="chat-page-head"><div><h1>Твои диалоги</h1><p>От первой оценки до завершения сделки.</p></div><button class="blue-btn" id="newDealBtn">＋&nbsp; Новая оценка</button></div>
+      <div class="chat-shell">
+        <aside class="dialog-list">
+          <div class="dialog-list-title"><b>Сообщения</b><span>4</span></div>
+          <button class="dialog-item"><span class="dialog-avatar">▣</span><span><b>Free Fire</b><small>Ожидает ID</small></span><em>›</em></button>
+          <button class="dialog-item active"><span class="dialog-avatar">▣</span><span><b id="activeThreadGame">Skupi</b><small id="activeThreadStatus">На оценке</small></span><em>›</em></button>
+          <button class="dialog-item"><span class="dialog-avatar">▣</span><span><b>Counter-Strike 2</b><small>На оценке</small></span><em>›</em></button>
+          <button class="dialog-item"><span class="dialog-avatar">▣</span><span><b>Brawl Stars</b><small>На оценке</small></span><em>›</em></button>
+        </aside>
+        <section class="conversation">
+          <header class="conversation-head"><div class="dialog-avatar">▣</div><div><h3 id="chatGameTitle">Skupi</h3><p>Бот-поддержка · <span id="chatStage">Новая оценка</span></p></div><span class="assistant-tag" id="aiBadge">АССИСТЕНТ</span></header>
+          <div class="messages" id="messages"><div class="date-line">21 сент.</div><div class="msg bot"><div class="bubble"><small>Skupi · бот</small><p>Привет! Я помогу оценить аккаунт. Напиши, какую игру продаёшь. Пароли и коды входа присылать не нужно.</p><time>сейчас</time></div></div></div>
+          <div class="quick-action hidden" id="payoutQuick"><div><b>Остались реквизиты</b><span>Добавь способ получения денег через защищённую форму.</span></div><button class="blue-btn" id="quickPayoutBtn">Добавить реквизиты</button></div>
+          <form class="composer" id="chatForm"><button type="button" class="attach-btn">⌕</button><input id="chatInput" autocomplete="off" placeholder="Напиши сообщение..."><button class="send-btn" aria-label="Отправить">➤</button></form>
+          <div class="chat-foot" id="dealProgress">Skupi собирает данные сделки</div>
+        </section>
+      </div>
+    </section>
+
+    <section class="view" id="view-wallet">
+      <div class="page-head"><div><p class="kicker">КОШЕЛЁК</p><h1>Баланс и операции</h1><p>Пополнение кошелька и история платежей.</p></div><button class="blue-btn" id="topupOpenBtn">＋&nbsp; Пополнить</button></div>
+      <div class="wallet-grid"><div class="wallet-card main-wallet"><span>ДОСТУПНО</span><strong id="walletBalance">0 ₽</strong><p>Баланс Skupki.net</p><button class="white-outline" id="topupOpenBtn2">Пополнить кошелёк</button></div><div class="wallet-card"><span>БЕЗОПАСНОСТЬ</span><h3>Платёжный провайдер</h3><p>В тестовом режиме пополнение проходит без настоящих денег. Для реального запуска подключается официальный merchant-аккаунт.</p></div></div>
+      <div class="transactions-card"><div class="transactions-head"><h2>История операций</h2><span id="txCount">0 операций</span></div><div id="transactions" class="transactions"><div class="empty-state">Операций пока нет</div></div></div>
+    </section>
+
+    <section class="view" id="view-profile"><div class="page-head"><div><p class="kicker">ПРОФИЛЬ</p><h1>Аккаунт</h1><p>Настройки профиля Skupki.net.</p></div></div><div class="profile-grid"><div class="profile-card"><div class="profile-avatar">A</div><div><h2>Пользователь</h2><p>Skupki.net</p></div></div><div class="profile-card settings"><div><span>E-mail</span><b>Подтверждается в сделке</b></div><div><span>Тема</span><b>Тёмная</b></div><div><span>Безопасность</span><b>OTP + платёжный токен</b></div></div></div></section>
+
+    <section class="view" id="view-admin"><div class="page-head"><div><p class="kicker">АДМИН-ПАНЕЛЬ</p><h1>Управление</h1><p>Заготовка панели для заявок, выплат и пользователей.</p></div></div><div class="admin-grid"><div class="stat"><span>Новые заявки</span><b>0</b></div><div class="stat"><span>На проверке</span><b>0</b></div><div class="stat"><span>Выплаты</span><b>0 ₽</b></div></div></section>
+  </main>
+
+  <dialog id="payoutDialog" class="modal"><div class="modal-card"><button class="modal-close" data-close="payoutDialog">×</button><p class="kicker">РЕКВИЗИТЫ</p><h2>Куда отправить деньги?</h2><p>Не отправляй номер карты в чат. В реальном режиме данные вводятся внутри формы платёжного провайдера, а Skupki получает только токен и маску.</p><div id="payoutContent"></div><p class="modal-error" id="payoutError"></p></div></dialog>
+
+  <dialog id="topupDialog" class="modal"><div class="modal-card"><button class="modal-close" data-close="topupDialog">×</button><p class="kicker">ПОПОЛНЕНИЕ</p><h2>Пополнить кошелёк</h2><p>Выбери сумму. В mock-режиме деньги тестовые; реальный платёж включается только после подключения провайдера.</p><div class="amount-grid"><button data-amount="500">500 ₽</button><button data-amount="1000">1 000 ₽</button><button data-amount="3000">3 000 ₽</button><button data-amount="5000">5 000 ₽</button></div><label class="field-label">Другая сумма<input id="topupAmount" inputmode="decimal" placeholder="Например, 1500"></label><button class="blue-btn full" id="topupSubmit">Продолжить</button><p class="modal-error" id="topupError"></p></div></dialog>
+
+  <div class="toast" id="toast"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
