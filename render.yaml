@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: skupki-net
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/app-config
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PAYMENT_PROVIDER
+        value: mock
+      - key: ENABLE_REAL_PAYOUTS
+        value: "false"

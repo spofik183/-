@@ -1,27 +1,3 @@
-# Skupki.net v3.1 — Railway-ready
-
-> Важно для GitHub/Railway: загрузите **всё содержимое этой папки**, включая папки `src/` и `public/`. Не загружайте только файлы из корня.
-
-Railway должен видеть в репозитории:
-
-```text
-package.json
-server.mjs
-Dockerfile
-public/
-  index.html
-  app.js
-  styles.css
-src/
-  services/
-  providers/
-  core/
-```
-
-Если `src/` отсутствует, Node завершится с `ERR_MODULE_NOT_FOUND` для `./src/services/skupi-ai.mjs`.
-
----
-
 # Skupki.net v3 — Skupi mini‑AI + Email OTP + PaymentProvider
 
 Готовый Node.js/Express прототип текущего Skupki.net с серверным Skupi.
